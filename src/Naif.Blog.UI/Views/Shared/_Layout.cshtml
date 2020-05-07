@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    @await Component.InvokeAsync("Head", Model.Blog)
+</head>
+<body>
+    @await Component.InvokeAsync("NavBar", Model.Blog)
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    @Model.Blog.Title<br/>
+                    <small>@Model.Blog.ByLine</small>
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div id="mainPane" class="col-md-8">
+                @RenderBody()
+            </div>
+            <div id="sidePane" class="col-md-4">
+                @await Component.InvokeAsync("Disclaimer")
+                @await Component.InvokeAsync("CategoryList")
+                @await Component.InvokeAsync("TagCloud")
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync("Footer", Model.Blog)
+</body>
+</html>

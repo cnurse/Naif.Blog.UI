@@ -1,0 +1,12 @@
+﻿@using Naif.Blog.Models;
+
+@model IEnumerable<Post>
+
+@{
+	foreach (var post in Model)
+	{
+		<section>
+            @await Component.InvokeAsync("Excerpt", new{post = post})
+		</section>
+	}
+}

@@ -1,0 +1,9 @@
+﻿@using Naif.Blog.Models
+
+@model Blog
+
+@{
+    var copyright = $"&copy; {DateTime.Now.Year} - {Model.Title}";
+}
+
+<p>@Html.Raw(copyright)</p>

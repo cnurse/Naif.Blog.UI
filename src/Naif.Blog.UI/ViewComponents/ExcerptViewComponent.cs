@@ -1,0 +1,17 @@
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Naif.Blog.Models;
+
+#pragma warning disable 1998
+
+namespace Naif.Blog.UI.ViewComponents
+{
+    public class ExcerptViewComponent : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync(PostBase post)
+        {
+            // ReSharper disable once Mvc.ViewComponentViewNotResolved
+            return View(post);
+        }
+    }
+}

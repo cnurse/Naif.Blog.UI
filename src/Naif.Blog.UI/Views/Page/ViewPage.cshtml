@@ -1,0 +1,12 @@
+﻿@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    if(!string.IsNullOrEmpty(Model.Page.PageTemplate))
+    {
+        Layout = $"~/Views/Themes/{Model.Blog.Theme}/Templates/{Model.Page.PageTemplate}.cshtml";
+    }
+}
+
+<section>
+    @await Component.InvokeAsync("Page", new { page = Model.Page })
+</section>

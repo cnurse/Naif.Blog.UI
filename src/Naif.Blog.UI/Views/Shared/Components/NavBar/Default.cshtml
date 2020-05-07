@@ -1,0 +1,31 @@
+﻿@using Naif.Blog.Models
+@using Microsoft.AspNetCore.Authorization
+
+@inject IAuthorizationService AuthorizationService
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Blog
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" asp-controller="Post" asp-action="Index">@Model.Title</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
+            @*@await Component.InvokeAsync("Navigation", new { parent = "0" })*@
+            <ul class="navbar-nav justify-content-end">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+                    {
+                        <li class="nav-item"><a asp-controller="Admin" asp-action="Index" class="nav-link">Admin</a></li>
+                    }
+                    <li class="nav-item"><a asp-controller="Profile" asp-action="Index" class="nav-link">@User.Identity.Name</a></li>
+                    <li class="nav-item"><a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

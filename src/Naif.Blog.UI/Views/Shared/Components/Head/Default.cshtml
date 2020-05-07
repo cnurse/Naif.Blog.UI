@@ -1,0 +1,20 @@
+﻿@using Naif.Blog.Models
+
+@model Blog
+
+@{
+    var theme = Model.Theme;
+    var cssFile = $"/{theme}/dist/assets/css/{theme}.css";
+
+}
+
+@await Component.InvokeAsync("GoogleAnalytics")
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@Model.Title</title>
+
+@await Component.InvokeAsync("ClientDependency")
+
+<link rel="stylesheet" href="@cssFile" />
+<link href="~/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml">

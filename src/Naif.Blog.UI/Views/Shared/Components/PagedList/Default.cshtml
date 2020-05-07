@@ -1,0 +1,14 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Naif.Blog.UI.ViewModels.PagedListViewModel
+
+@{
+    foreach (var post in Model.Posts)
+    {
+    <section>
+        @await Component.InvokeAsync("Excerpt", new{post = post})
+    </section>
+    }
+}
+
+@await Component.InvokeAsync("Pager", new{pager = Model.Pager})

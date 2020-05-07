@@ -1,0 +1,54 @@
+﻿@inject IAuthorizationService AuthorizationService
+
+@using Microsoft.AspNetCore.Authorization
+@using Naif.Blog.Models
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Post
+
+@{
+    var returnUrl = $"/post/{Model.Slug}";
+}
+
+<article class="post">
+    <header>
+        <div class="row">
+            <div class="col-md-10">
+                <h2>@Model.Title</h2>
+            </div>
+            <div class="col-md-2">
+                @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+                {
+                    <a asp-controller="Post" asp-action="EditPost" asp-route-id="@Model.PostId" asp-route-returnUrl="@returnUrl" class="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                }
+            </div>
+        </div>
+        <div>
+            Category:
+            @foreach (var category in Model.Categories)
+            {
+                <span><a asp-controller="Post" asp-action="ViewCategory" asp-route-category="@category">@category</a></span>
+            }
+        </div>
+        <div>
+            Tags:
+            @foreach (var tag in Model.Tags)
+            {
+                <span><a asp-controller="Post" asp-action="ViewTag" asp-route-tag="@tag">@tag</a></span>
+            }
+        </div>
+        <div>Last Modified: @Model.LastModified.ToString("MMM d yyyy")</div>
+    </header>
+    <div class="info">
+        <div class="date">
+            <span class="month">@Model.PubDate.ToString("MMM")</span>
+            <span class="day">@Model.PubDate.Day</span>
+            <span class="year">@Model.PubDate.Year</span>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <section>@Html.Raw(Model.Content)</section>
+</article>
