@@ -10,8 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Naif.Auth0\Naif.Auth0.csproj" />
-    <ProjectReference Include="..\Naif.Blog.Core\Naif.Blog.Core.csproj" />
+    <PackageReference Include="Naif.Blog.Core" Version="1.0.0" />
   </ItemGroup>
 
 
