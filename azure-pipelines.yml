@@ -18,9 +18,14 @@ steps:
 - task: NuGetToolInstaller@1
 
 # Restore Nuget Dependencies
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
+  displayName: dotnet restore
   inputs:
-    restoreSolution: '$(solution)'
+    command: restore
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: 'Keydance'
+    includeNuGetOrg: true
 
 # Build project
 - task: VSBuild@1
