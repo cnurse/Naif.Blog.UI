@@ -95,6 +95,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Authorize(Policy = "RequireAdminRole")]
+        [Route("NewPage/{returnUrl}")]
         public IActionResult NewPage(string returnUrl)
         {
             var page = new Page

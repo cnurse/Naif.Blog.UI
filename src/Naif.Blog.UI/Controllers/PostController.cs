@@ -69,7 +69,6 @@ namespace Naif.Blog.UI.Controllers
         [HttpGet]
         [Route("")]
         [Route("Index/{page?}")]
-        [Route("/{page?}")]
         public IActionResult Index(int? page)
         {
             return DisplayListView(page, string.Empty, "Index");
@@ -204,3 +203,4 @@ namespace Naif.Blog.UI.Controllers
         }
     }
 }
+-+
