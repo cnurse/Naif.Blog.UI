@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <PackageVersion>1.0.3</PackageVersion>
+    <PackageVersion>1.0.4</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Naif.Blog.Core" Version="1.0.0" />
+    <PackageReference Include="Naif.Auth0" Version="1.0.3" />
+    <PackageReference Include="Naif.Blog.Core" Version="1.0.1" />
+    <PackageReference Include="Naif.Core" Version="2.0.0" />
   </ItemGroup>
 
 

@@ -68,7 +68,7 @@
             <ul class="navbar-nav justify-content-end">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item"><a asp-controller="Account" asp-action="Profile" class="nav-link">@User.Identity.Name</a></li>
+                    <li class="nav-item"><a asp-controller="Profile" asp-action="Index" class="nav-link">@User.Identity.Name</a></li>
                     <li class="nav-item"><a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a></li>
                 }
             </ul>

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Naif.Blog.Framework;
 using Naif.Blog.Models;
 using Naif.Blog.UI.ViewModels;
+using Naif.Core.Collections;
 
 namespace Naif.Blog.UI.ViewComponents
 {
