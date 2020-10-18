@@ -140,7 +140,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.Categories.Contains(category) && p.IsPublished)
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.Categories.Contains(category) && p.IsPublished)
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
@@ -177,7 +177,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.Keywords.Contains(tag) && p.IsPublished)
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.Keywords.Contains(tag) && p.IsPublished)
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
@@ -193,7 +193,7 @@ namespace Naif.Blog.UI.Controllers
                 Blog = Blog,
                 Filter = filter,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => (string.IsNullOrEmpty(filter) || p.Title?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) && (p.IsPublished || includeUnpublished))
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => (string.IsNullOrEmpty(filter) || p.PostType == PostType.Post && p.Title?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) && (p.IsPublished || includeUnpublished))
             };
             
             ViewBag.PageIndex = page ?? 0;
