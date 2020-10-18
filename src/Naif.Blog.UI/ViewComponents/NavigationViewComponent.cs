@@ -29,7 +29,7 @@ namespace Naif.Blog.UI.ViewComponents
 
             await Task.Run(() =>
             {
-                foreach(var page in _postRepository.GetAllPosts(Blog.Id).Where(p => p.ParentPostId == parent))
+                foreach(var page in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Page && p.ParentPostId == parent))
                 {
                     if (page.PostType == PostType.Post)
                     {

@@ -14,7 +14,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
-            @*@await Component.InvokeAsync("Navigation", new { parent = "0" })*@
+            @await Component.InvokeAsync("Navigation", new { parent = "" })
             <ul class="navbar-nav justify-content-end">
                 @if (User.Identity.IsAuthenticated)
                 {
