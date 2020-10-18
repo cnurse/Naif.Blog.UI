@@ -24,7 +24,7 @@
         @{
             foreach (var post in Model.Posts)
             {
-                var id = Model.IsPage ? (post as Page).PageId : (post as Post).PostId;
+                var id = post.PostId;
                 <tr>
                     <td><a asp-controller="@controller" asp-action="@action" asp-route-id="@id" asp-route-returnUrl="@returnUrl">@post.Title</a></td>
                     <td>@string.Join(",", post.Categories)</td>

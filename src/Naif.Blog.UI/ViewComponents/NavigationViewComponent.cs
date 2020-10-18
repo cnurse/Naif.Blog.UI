@@ -10,12 +10,12 @@ namespace Naif.Blog.UI.ViewComponents
 {
     public class NavigationViewComponent : BaseViewComponent
     {
-        private readonly IPageRepository _pageRepository;
+        private readonly IPostRepository _postRepository;
 
-        public NavigationViewComponent(IBlogRepository blogRepository, IBlogContext blogContext, IPageRepository pageRepository)
+        public NavigationViewComponent(IBlogRepository blogRepository, IBlogContext blogContext, IPostRepository postRepository)
             : base(blogRepository, blogContext)
         {
-            _pageRepository = pageRepository;
+            _postRepository = postRepository;
         }
         
         public async Task<IViewComponentResult> InvokeAsync(string parent)
@@ -29,9 +29,9 @@ namespace Naif.Blog.UI.ViewComponents
 
             await Task.Run(() =>
             {
-                foreach(var page in _pageRepository.GetAllPages(Blog.Id).Where(p => p.ParentPageId == parent))
+                foreach(var page in _postRepository.GetAllPosts(Blog.Id).Where(p => p.ParentPostId == parent))
                 {
-                    if (page.PageType == PageType.Blog)
+                    if (page.PostType == PostType.Post)
                     {
                         menu.Items.Add(new MenuItem
                         {

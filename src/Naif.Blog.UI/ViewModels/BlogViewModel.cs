@@ -14,10 +14,6 @@ namespace Naif.Blog.UI.ViewModels
         
         public int PageIndex { get; set; }
         
-        public Page Page { get; set; }
-
-        public IEnumerable<Page> Pages { get; set; }
-
         public List<SelectListItem> PageTemplates { get; set; }
 
         public Post Post { get; set; }

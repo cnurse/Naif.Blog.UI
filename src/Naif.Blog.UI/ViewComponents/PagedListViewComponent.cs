@@ -10,7 +10,7 @@ namespace Naif.Blog.UI.ViewComponents
 {
     public class PagedListViewComponent : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(IEnumerable<PostBase> list, int pageCount, int pageIndex, string filter, bool isPage, bool? isTable)
+        public async Task<IViewComponentResult> InvokeAsync(IEnumerable<Post> list, int pageCount, int pageIndex, string filter, bool isPage, bool? isTable)
         {
             var posts = list.InPagesOf(pageCount).GetPage(pageIndex);
             
