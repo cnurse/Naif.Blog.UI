@@ -7,8 +7,6 @@
     }
 }
 
-@model Naif.Blog.UI.ViewModels.BlogViewModel
-
 <section>
     @await Component.InvokeAsync("Post", new { post = Model.Post })
 </section>
