@@ -46,7 +46,7 @@ namespace Naif.Blog.UI.ViewComponents
                         menu.Items.Add(new MenuItem
                         {
                             IsActive = false,
-                            Link = $"/post/{post.Slug}",
+                            Link = $"/page/{post.Slug}",
                             Text = post.Title
                         });
                     }
