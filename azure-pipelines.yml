@@ -14,9 +14,6 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-- task: NuGetToolInstaller@1
-
 # Restore Nuget Dependencies
 - task: DotNetCoreCLI@2
   displayName: dotnet restore
