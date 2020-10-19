@@ -29,16 +29,16 @@ namespace Naif.Blog.UI.ViewComponents
 
             await Task.Run(() =>
             {
-                foreach(var page in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Page && p.ParentPostId == parent))
+                foreach(var post in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Page && p.ParentPostId == parent))
                 {
-                    if (page.PostType == PostType.Post)
+                    if (post.PostType == PostType.Post)
                     {
                         menu.Items.Add(new MenuItem
                         {
                             Controller = "Post",
                             Action = "Index",
                             IsActive = false,
-                            Text = page.Title
+                            Text = post.Title
                         });
                     }
                     else
@@ -46,8 +46,8 @@ namespace Naif.Blog.UI.ViewComponents
                         menu.Items.Add(new MenuItem
                         {
                             IsActive = false,
-                            Link = $"/page/{page.Slug}",
-                            Text = page.Title
+                            Link = $"/post/{post.Slug}",
+                            Text = post.Title
                         });
                     }
                 }
