@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Matching;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
 using Naif.Blog.Services;
@@ -29,26 +30,42 @@ namespace Naif.Blog.UI.ViewComponents
 
             await Task.Run(() =>
             {
-                foreach(var post in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Page && p.ParentPostId == parent))
+                foreach(var post in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType != PostType.Post && p.ParentPostId == parent))
                 {
-                    if (post.PostType == PostType.Post)
+                    switch (post.PostType)
                     {
-                        menu.Items.Add(new MenuItem
-                        {
-                            Controller = "Post",
-                            Action = "Index",
-                            IsActive = false,
-                            Text = post.Title
-                        });
-                    }
-                    else
-                    {
-                        menu.Items.Add(new MenuItem
-                        {
-                            IsActive = false,
-                            Link = $"/page/{post.Slug}",
-                            Text = post.Title
-                        });
+                        case PostType.Page:
+                            menu.Items.Add(new MenuItem
+                            {
+                                IsActive = false,
+                                Link = $"/page/{post.Slug}",
+                                Text = post.Title
+                            });
+                            break;
+                        case PostType.Blog:
+                            menu.Items.Add(new MenuItem
+                            {
+                                Link = $"/post/index",
+                                IsActive = false,
+                                Text = post.Title
+                            });
+                            break;
+                        case PostType.Category:
+                            menu.Items.Add(new MenuItem
+                            {
+                                Link = $"/category/{post.Slug}",
+                                IsActive = false,
+                                Text = post.Title
+                            });
+                            break;
+                        case PostType.Tag:
+                            menu.Items.Add(new MenuItem
+                            {
+                                Link = $"/tag/{post.Slug}",
+                                IsActive = false,
+                                Text = post.Title
+                            });
+                            break;
                     }
                 }
             });
