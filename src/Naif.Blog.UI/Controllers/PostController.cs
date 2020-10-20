@@ -71,7 +71,15 @@ namespace Naif.Blog.UI.Controllers
         [Route("Index/{page?}")]
         public IActionResult Index(int? page)
         {
-            return DisplayListView(page, string.Empty, "Index");
+            var blogViewModel = new BlogViewModel
+            {
+                Blog = Blog,
+                PageIndex = page ?? 0,
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.IsPublished)
+            };
+            
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("Index", blogViewModel);           
         }
 
         [HttpGet]
@@ -193,7 +201,7 @@ namespace Naif.Blog.UI.Controllers
                 Blog = Blog,
                 Filter = filter,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => (string.IsNullOrEmpty(filter) || p.PostType == PostType.Post && p.Title?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) && (p.IsPublished || includeUnpublished))
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && (string.IsNullOrEmpty(filter) || p.Title?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) && (p.IsPublished || includeUnpublished))
             };
             
             ViewBag.PageIndex = page ?? 0;
