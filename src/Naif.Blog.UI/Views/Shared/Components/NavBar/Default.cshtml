@@ -7,9 +7,13 @@
 
 @model Blog
 
+@{
+    var homeUrl = (String.IsNullOrEmpty(Model.HomeRedirectUrl)) ? "/home" : Model.HomeRedirectUrl;
+}
+
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" role="navigation">
     <div class="container">
-        <a class="navbar-brand" asp-controller="Post" asp-action="Index">@Model.Title</a>
+        <a class="navbar-brand" href="@homeUrl">@Model.Title</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
