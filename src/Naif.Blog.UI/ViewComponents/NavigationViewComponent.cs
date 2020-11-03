@@ -53,7 +53,7 @@ namespace Naif.Blog.UI.ViewComponents
                         case PostType.Category:
                             menu.Items.Add(new MenuItem
                             {
-                                Link = $"/page/category/{post.Slug}",
+                                Link = $"/page/category/{post.PostTypeDetail}",
                                 IsActive = false,
                                 Text = post.Title
                             });
@@ -61,7 +61,7 @@ namespace Naif.Blog.UI.ViewComponents
                         case PostType.Tag:
                             menu.Items.Add(new MenuItem
                             {
-                                Link = $"/page/tag/{post.Slug}",
+                                Link = $"/page/tag/{post.PostTypeDetail}",
                                 IsActive = false,
                                 Text = post.Title
                             });
@@ -69,7 +69,7 @@ namespace Naif.Blog.UI.ViewComponents
                         case PostType.Url:
                             menu.Items.Add(new MenuItem
                             {
-                                Link = $"{post.Slug}",
+                                Link = $"{post.PostTypeDetail}",
                                 IsActive = false,
                                 Text = post.Title
                             });
