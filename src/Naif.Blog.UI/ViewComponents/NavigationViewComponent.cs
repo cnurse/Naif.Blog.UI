@@ -66,6 +66,14 @@ namespace Naif.Blog.UI.ViewComponents
                                 Text = post.Title
                             });
                             break;
+                        case PostType.Url:
+                            menu.Items.Add(new MenuItem
+                            {
+                                Link = $"{post.Slug}",
+                                IsActive = false,
+                                Text = post.Title
+                            });
+                            break;
                     }
                 }
             });
