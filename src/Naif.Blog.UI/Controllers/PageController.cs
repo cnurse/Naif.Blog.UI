@@ -22,7 +22,7 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
-        [Route("blog/{detail}{page?}")]
+        [Route("blog/{detail}/{page?}")]
         public IActionResult ViewBlog(string detail, int? page)
         {
             var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == detail &&  p.PostType == PostType.Blog);
