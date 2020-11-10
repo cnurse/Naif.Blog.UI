@@ -45,7 +45,7 @@ namespace Naif.Blog.UI.ViewComponents
                         case PostType.Blog:
                             menu.Items.Add(new MenuItem
                             {
-                                Link = $"/post/index",
+                                Link = $"/page/blog/{post.PostTypeDetail}",
                                 IsActive = false,
                                 Text = post.Title
                             });

@@ -1,0 +1,18 @@
+﻿@using Naif.Blog.UI.ViewComponents
+
+@{
+    if (!string.IsNullOrEmpty(Model.Post.Template))
+    {
+        Layout = $"~/Views/Themes/{Model.Blog.Theme}/Templates/{Model.Post.Template}.cshtml";
+    }
+}
+
+<section>
+    <article>@Html.Raw(Model.Post.Content)</article>
+</section>
+
+<section>
+    <h2>Articles</h2>
+
+    @await Component.InvokeAsync(typeof(ListViewComponent), new { list = Model.Posts })
+</section>
