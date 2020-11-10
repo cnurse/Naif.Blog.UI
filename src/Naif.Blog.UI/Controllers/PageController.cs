@@ -36,6 +36,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
+                Post = post,
                 Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.IsPublished)
             };
             
@@ -68,7 +69,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("category/{category}/{page?}")]
-        public IActionResult ViewCategory(string category)
+        public IActionResult ViewCategory(string category, int? page)
         {
             var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == category && p.PostType == PostType.Category);
 
@@ -82,7 +83,7 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = 0,
+                PageIndex = page ?? 0,
                 Post = post,
                 Posts = posts
             };
@@ -93,7 +94,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("tag/{tag}/{page?}")]
-        public IActionResult ViewTag(string tag)
+        public IActionResult ViewTag(string tag, int? page)
         {
             var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
 
@@ -107,7 +108,7 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = 0,
+                PageIndex = page ?? 0,
                 Post = post,
                 Posts = posts
             };
