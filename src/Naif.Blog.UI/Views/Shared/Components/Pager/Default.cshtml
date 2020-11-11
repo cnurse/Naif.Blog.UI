@@ -10,7 +10,7 @@
             var attributes = new Dictionary<string, object> {{"class", "page-link"}};
             if (Model.HasPreviousPage)
             {
-                Model.RouteValues["page"] = Model.PageIndex - 1;
+                Model.RouteValues["pageIndex"] = Model.PageIndex - 1;
                 <li class="page-item @Model.PreviousCssClass">@Html.ActionLink(@Model.PreviousText, @Model.Action, @Model.Controller, @Model.RouteValues, attributes)</li>
             }
             for (int i = 1; i < Model.PageCount + 1; i++)
@@ -21,13 +21,13 @@
                 }
                 else
                 {
-                    Model.RouteValues["page"] = i -1;
+                    Model.RouteValues["pageIndex"] = i -1;
                     <li class="page-item">@Html.ActionLink(i.ToString(), @Model.Action, @Model.Controller, @Model.RouteValues, attributes)</li>
                 }
             }
             if (Model.HasNextPage)
             {
-                Model.RouteValues["page"] = Model.PageIndex + 1;
+                Model.RouteValues["pageIndex"] = Model.PageIndex + 1;
                 <li class="page-item @Model.NextCssClass">@Html.ActionLink(@Model.NextText, @Model.Action, @Model.Controller, @Model.RouteValues, attributes)</li>
             }
         }
