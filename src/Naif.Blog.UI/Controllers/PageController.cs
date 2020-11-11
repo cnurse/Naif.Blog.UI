@@ -22,8 +22,8 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
-        [Route("blog/{detail}/{page?}")]
-        public IActionResult ViewBlog(string detail, int? page)
+        [Route("blog/{detail}/{pageIndex?}")]
+        public IActionResult ViewBlog(string detail, int? pageIndex)
         {
             var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == detail &&  p.PostType == PostType.Blog);
 
@@ -35,7 +35,7 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = page ?? 0,
+                PageIndex = pageIndex ?? 0,
                 Post = post,
                 Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.IsPublished)
             };
@@ -68,8 +68,8 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
-        [Route("category/{category}/{page?}")]
-        public IActionResult ViewCategory(string category, int? page)
+        [Route("category/{category}/{pageIndex?}")]
+        public IActionResult ViewCategory(string category, int? pageIndex)
         {
             var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == category && p.PostType == PostType.Category);
 
@@ -83,7 +83,7 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = page ?? 0,
+                PageIndex = pageIndex ?? 0,
                 Post = post,
                 Posts = posts
             };
@@ -93,8 +93,8 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
-        [Route("tag/{tag}/{page?}")]
-        public IActionResult ViewTag(string tag, int? page)
+        [Route("tag/{tag}/{pageIndex?}")]
+        public IActionResult ViewTag(string tag, int? pageIndex)
         {
             var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
 
@@ -108,7 +108,7 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = page ?? 0,
+                PageIndex = pageIndex ?? 0,
                 Post = post,
                 Posts = posts
             };
