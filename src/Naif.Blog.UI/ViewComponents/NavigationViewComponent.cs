@@ -32,49 +32,7 @@ namespace Naif.Blog.UI.ViewComponents
             {
                 foreach(var post in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType != PostType.Post && p.ParentPostId == parent))
                 {
-                    switch (post.PostType)
-                    {
-                        case PostType.Page:
-                            menu.Items.Add(new MenuItem
-                            {
-                                IsActive = false,
-                                Link = $"/page/{post.Slug}",
-                                Text = post.Title
-                            });
-                            break;
-                        case PostType.Blog:
-                            menu.Items.Add(new MenuItem
-                            {
-                                Link = $"/page/blog/{post.PostTypeDetail}",
-                                IsActive = false,
-                                Text = post.Title
-                            });
-                            break;
-                        case PostType.Category:
-                            menu.Items.Add(new MenuItem
-                            {
-                                Link = $"/page/category/{post.PostTypeDetail}",
-                                IsActive = false,
-                                Text = post.Title
-                            });
-                            break;
-                        case PostType.Tag:
-                            menu.Items.Add(new MenuItem
-                            {
-                                Link = $"/page/tag/{post.PostTypeDetail}",
-                                IsActive = false,
-                                Text = post.Title
-                            });
-                            break;
-                        case PostType.Url:
-                            menu.Items.Add(new MenuItem
-                            {
-                                Link = $"{post.PostTypeDetail}",
-                                IsActive = false,
-                                Text = post.Title
-                            });
-                            break;
-                    }
+                    menu.Items.Add(CreateMenuItem(post));
                 }
             });
 
