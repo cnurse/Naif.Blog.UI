@@ -19,11 +19,11 @@ namespace Naif.Blog.UI.ViewComponents
             _postRepository = postRepository;
         }
         
-        public async Task<IViewComponentResult> InvokeAsync(string parent)
+        public async Task<IViewComponentResult> InvokeAsync(string parent, string cssClass)
         {
             var menu = new Menu
             {
-                CssClass = "navbar-nav",
+                CssClass = cssClass,
                 IsActiveCssClass = "active",
                 Items = new List<MenuItem>()
             };
