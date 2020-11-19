@@ -19,7 +19,7 @@ namespace Naif.Blog.UI.ViewComponents
             _postRepository = postRepository;
         }
         
-        public async Task<IViewComponentResult> InvokeAsync(string parent, string cssClass)
+        public async Task<IViewComponentResult> InvokeAsync(string postId, string cssClass, bool includeParent = false)
         {
             var menu = new Menu
             {
@@ -28,9 +28,25 @@ namespace Naif.Blog.UI.ViewComponents
                 Items = new List<MenuItem>()
             };
 
+            if (includeParent && !string.IsNullOrEmpty(postId))
+            {
+                var currentPost = _postRepository.GetAllPosts(Blog.Id).Single(p => p.PostType != PostType.Post && p.PostId == postId);
+
+                if (currentPost != null && !string.IsNullOrEmpty(currentPost.ParentPostId))
+                {
+                    var parentPost = _postRepository.GetAllPosts(Blog.Id).Single(p => p.PostType != PostType.Post && p.PostId == currentPost.ParentPostId);
+                    if (parentPost != null)
+                    {
+                        var menuItem = CreateMenuItem(parentPost);
+                        menuItem.Text = "Return to " + menuItem.Text;
+                        menu.Items.Add(menuItem);
+                    }
+                }
+            }
+
             await Task.Run(() =>
             {
-                foreach(var post in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType != PostType.Post && p.ParentPostId == parent))
+                foreach(var post in _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType != PostType.Post && p.ParentPostId == postId))
                 {
                     menu.Items.Add(CreateMenuItem(post));
                 }
