@@ -35,38 +35,6 @@ namespace Naif.Blog.UI.Controllers
         }
         
         [HttpGet]
-        [Authorize(Policy = "RequireAdminRole")]
-        [Route("Clear")]
-        public IActionResult Clear()
-        {
-            return DisplayListView(0, string.Empty, "List");
-        }
-
-        [HttpGet]
-        [Authorize(Policy = "RequireAdminRole")]
-        [Route("EditPost/{id}/{returnUrl}")]
-        public IActionResult EditPost(string id, string returnUrl)
-        {
-            var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostId == id);
-
-            if (post == null)
-            {
-                return new NotFoundResult();
-            }
-            
-            var blogViewModel = new BlogViewModel
-            {
-                Blog = Blog,
-                Categories = BlogRepository.GetCategories(Blog.Id).Select(c => new SelectListItem { Value = c.Key, Text = c.Key }).ToList(),
-                Post = post
-            };
-
-            ViewBag.ReturnUrl = returnUrl;
-
-            return View("EditPost", blogViewModel);
-        }
-        
-        [HttpGet]
         [Route("")]
         [Route("Index/{page?}")]
         public IActionResult Index(int? page)
@@ -80,64 +48,6 @@ namespace Naif.Blog.UI.Controllers
             
             // ReSharper disable once Mvc.ViewNotResolved
             return View("Index", blogViewModel);           
-        }
-
-        [HttpGet]
-        [Authorize(Policy = "RequireAdminRole")]
-        [Route("List")]
-        public IActionResult List(string filter, int? page)
-        {
-            return DisplayListView(page, filter, "List");
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [Route("NewPost/{returnUrl}")]
-        public IActionResult NewPost(string returnUrl)
-        {
-            var post = new Post
-            {
-                BlogId = Blog.Id
-            };
-
-            var blogViewModel = new BlogViewModel
-            {
-                Blog = Blog,
-                Categories = BlogRepository.GetCategories(Blog.Id).Select(c => new SelectListItem { Value = c.Key, Text = c.Key }).ToList(),
-                Post = post
-            };
-
-            ViewBag.ReturnUrl = returnUrl;
-
-            return View("EditPost", blogViewModel);
-            
-        }
-        
-        [HttpPost]
-        [Authorize(Policy = "RequireAdminRole")]
-        [Route("SavePost/{returnUrl}")]
-        public IActionResult SavePost([FromForm] Post post, string returnUrl)
-        {
-            var match = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostId == post.PostId);
-
-            if (match != null)
-            {
-                match.Title = post.Title;
-                match.Excerpt = post.Excerpt;
-                match.Content = post.Content;
-
-                if (!string.Equals(match.Slug, post.Slug, StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(match.Slug))
-                {
-                    match.Slug = CreateSlug(post.Title);
-                }
-
-                match.Categories = post.Categories;
-                match.Keywords = post.Keywords;
-                match.IsPublished = post.IsPublished;
-
-                _postRepository.SavePost(match);
-            }
-
-            return Redirect(returnUrl);
         }
 
         [HttpGet]

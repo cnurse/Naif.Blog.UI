@@ -19,17 +19,6 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
             @await Component.InvokeAsync("Navigation", new { postId = "", cssClass="navbar-nav" })
-            <ul class="navbar-nav justify-content-end">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
-                    {
-                        <li class="nav-item"><a asp-controller="Admin" asp-action="Index" class="nav-link">Admin</a></li>
-                    }
-                    <li class="nav-item"><a asp-controller="Profile" asp-action="Index" class="nav-link">@User.Identity.Name</a></li>
-                    <li class="nav-item"><a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a></li>
-                }
-            </ul>
         </div>
     </div>
 </nav>
