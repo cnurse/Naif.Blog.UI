@@ -1,0 +1,8 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Naif.Blog.Models.Menu
+
+<section class="recentArticles">
+    <h2>Recent Articles</h2>
+    @await Component.InvokeAsync("Menu", new { menu = Model })
+</section>
