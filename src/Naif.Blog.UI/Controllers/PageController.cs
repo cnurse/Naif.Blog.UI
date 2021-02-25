@@ -37,7 +37,7 @@ namespace Naif.Blog.UI.Controllers
                 Blog = Blog,
                 PageIndex = pageIndex ?? 0,
                 Post = post,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => (p.PostType == PostType.Post || p.PostType == PostType.Page) && p.IsPublished)
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p))
             };
             
             // ReSharper disable once Mvc.ViewNotResolved
@@ -78,7 +78,7 @@ namespace Naif.Blog.UI.Controllers
                 return new NotFoundResult();
             }
 
-            var posts = _postRepository.GetAllPosts(Blog.Id).Where(p => (p.PostType == PostType.Post || p.PostType == PostType.Page) && p.Categories.Contains(category) && p.IsPublished);
+            var posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Categories.Contains(category));
 
             var blogViewModel = new BlogViewModel
             {
@@ -103,7 +103,7 @@ namespace Naif.Blog.UI.Controllers
                 return new NotFoundResult();
             }
 
-            var posts = _postRepository.GetAllPosts(Blog.Id).Where(p => (p.PostType == PostType.Post || p.PostType == PostType.Page) && p.Keywords.Contains(tag) && p.IsPublished);
+            var posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Keywords.Contains(tag));
 
             var blogViewModel = new BlogViewModel
             {

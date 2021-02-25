@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <PackageVersion>2.0.2</PackageVersion>
+    <PackageVersion>2.0.3</PackageVersion>
     <LangVersion>9</LangVersion>
   </PropertyGroup>
 
@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Naif.Auth0" Version="2.0.0" />
-    <PackageReference Include="Naif.Blog.Core" Version="2.0.0" />
+    <PackageReference Include="Naif.Blog.Core" Version="2.0.2" />
     <PackageReference Include="Naif.Core" Version="3.0.0" />
   </ItemGroup>
 

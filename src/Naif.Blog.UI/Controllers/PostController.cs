@@ -58,7 +58,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.Categories.Contains(category) && p.IsPublished)
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Categories.Contains(category))
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
@@ -95,29 +95,11 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.Keywords.Contains(tag) && p.IsPublished)
+                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Keywords.Contains(tag))
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("Index", blogViewModel);
-        }
-        
-        private IActionResult DisplayListView(int? page, string filter, string view)
-        {
-            bool includeUnpublished = _authorizationService.AuthorizeAsync(User, "RequireAdminRole").Result.Succeeded;
-
-            var blogViewModel = new BlogViewModel
-            {
-                Blog = Blog,
-                Filter = filter,
-                PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && (string.IsNullOrEmpty(filter) || p.Title?.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0) && (p.IsPublished || includeUnpublished))
-            };
-            
-            ViewBag.PageIndex = page ?? 0;
-            
-            // ReSharper disable once Mvc.ViewNotResolved
-            return View(view, blogViewModel);           
         }
     }
 }
