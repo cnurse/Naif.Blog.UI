@@ -8,9 +8,12 @@ namespace Naif.Blog.UI.Controllers
 {
     public class ErrorController : BaseController
     {
-        public ErrorController(IBlogRepository blogRepository, IBlogContext blogContext) 
-            : base(blogRepository, blogContext) { }
+        public ErrorController(IBlogContext blogContext)
+        {
+            Blog = blogContext.CurrentBlog;
+        }
 
+        public Models.Blog Blog { get; }
 
         public IActionResult Index()
         {

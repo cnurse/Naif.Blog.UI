@@ -24,12 +24,12 @@
                 @RenderBody()
             </div>
             <div id="sidePane" class="col-md-4">
-                @await Component.InvokeAsync("Disclaimer")
-                @await Component.InvokeAsync("CategoryList")
+                <Disclaimer Blog="@Model.Blog" />
+                <CategoryList Blog="Model.Blog" />
                 @await Component.InvokeAsync("TagCloud")
             </div>
         </div>
     </div>
-    @await Component.InvokeAsync("Footer", Model.Blog)
+    <PageFooter Blog="Model.Blog" />
 </body>
 </html>

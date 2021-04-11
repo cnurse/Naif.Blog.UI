@@ -11,21 +11,21 @@ namespace Naif.Blog.UI.Controllers
     [Route("Page")]
     public class PageController : BaseController
     {
-        private readonly IPostRepository _postRepository;
+        private readonly IBlogManager _blogManager;
 
-        public PageController(IBlogRepository blogRepository,
-            IBlogContext blogContext,
-            IPostRepository postRepository)
-            : base(blogRepository, blogContext)
+        public PageController(IBlogContext blogContext, IBlogManager blogManager)
         {
-            _postRepository = postRepository;
+            Blog = blogContext.CurrentBlog;
+            _blogManager = blogManager;
         }
-
+        
+        public Models.Blog Blog { get; }
+        
         [HttpGet]
         [Route("blog/{detail}/{pageIndex?}")]
         public IActionResult ViewBlog(string detail, int? pageIndex)
         {
-            var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == detail &&  p.PostType == PostType.Blog);
+            var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == detail && p.PostType == PostType.Blog);
 
             if (post == null)
             {
@@ -37,7 +37,7 @@ namespace Naif.Blog.UI.Controllers
                 Blog = Blog,
                 PageIndex = pageIndex ?? 0,
                 Post = post,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p))
             };
             
             // ReSharper disable once Mvc.ViewNotResolved
@@ -49,7 +49,7 @@ namespace Naif.Blog.UI.Controllers
         [Route("{slug}")]
         public IActionResult ViewPost(string slug)
         {
-            var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.Slug == slug);
+            var post = _blogManager.GetPost(Blog.Id, p => p.Slug == slug);
 
             if (post == null)
             {
@@ -71,14 +71,14 @@ namespace Naif.Blog.UI.Controllers
         [Route("category/{category}/{pageIndex?}")]
         public IActionResult ViewCategory(string category, int? pageIndex)
         {
-            var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == category && p.PostType == PostType.Category);
+            var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == category && p.PostType == PostType.Category);
 
             if (post == null)
             {
                 return new NotFoundResult();
             }
 
-            var posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Categories.Contains(category));
+            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Contains(category));
 
             var blogViewModel = new BlogViewModel
             {
@@ -96,14 +96,14 @@ namespace Naif.Blog.UI.Controllers
         [Route("tag/{tag}/{pageIndex?}")]
         public IActionResult ViewTag(string tag, int? pageIndex)
         {
-            var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
+            var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
 
             if (post == null)
             {
                 return new NotFoundResult();
             }
 
-            var posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Keywords.Contains(tag));
+            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Contains(tag));
 
             var blogViewModel = new BlogViewModel
             {

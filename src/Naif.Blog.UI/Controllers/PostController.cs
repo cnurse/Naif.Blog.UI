@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Naif.Blog.Controllers;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
@@ -14,18 +12,15 @@ namespace Naif.Blog.UI.Controllers
 	[Route("Post")]
     public class PostController : BaseController
     {
-        private readonly IPostRepository _postRepository;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly IBlogManager _blogManager;
 
-        public PostController(IAuthorizationService authorizationService,
-            IBlogRepository blogRepository,
-            IBlogContext blogContext,
-            IPostRepository postRepository)
-            : base(blogRepository, blogContext)
+        public PostController(IBlogContext blogContext, IBlogManager blogManager)
         {
-            _authorizationService = authorizationService;
-            _postRepository = postRepository;
+            Blog = blogContext.CurrentBlog;
+            _blogManager = blogManager;
         }
+        
+        public Models.Blog Blog { get; }
 
         [HttpGet]
         [Route("Cancel/{returnUrl}")]
@@ -43,11 +38,11 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => p.PostType == PostType.Post && p.IsPublished)
+                Posts = _blogManager.GetPosts(Blog.Id, p => p.PostType == PostType.Post && p.IsPublished)
             };
             
             // ReSharper disable once Mvc.ViewNotResolved
-            return View("Index", blogViewModel);           
+            return View("ViewList", blogViewModel);           
         }
 
         [HttpGet]
@@ -58,18 +53,18 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Categories.Contains(category))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Contains(category))
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
-            return View("Index", blogViewModel);
+            return View("ViewList", blogViewModel);
         }
 
         [HttpGet]
         [Route("{slug}")]
         public IActionResult ViewPost(string slug)
         {
-            var post = _postRepository.GetAllPosts(Blog.Id).SingleOrDefault(p => p.Slug == slug);
+            var post = _blogManager.GetPost(Blog.Id, p => p.Slug == slug);
 
             if (post == null)
             {
@@ -95,11 +90,11 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _postRepository.GetAllPosts(Blog.Id).Where(p => Post.SearchPredicate(p) && p.Keywords.Contains(tag))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Keywords.Contains(tag))
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
-            return View("Index", blogViewModel);
+            return View("ViewList", blogViewModel);
         }
     }
 }

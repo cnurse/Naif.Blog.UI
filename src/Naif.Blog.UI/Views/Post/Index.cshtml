@@ -1,8 +1,0 @@
-﻿@using Naif.Blog.UI.ViewComponents
-@model Naif.Blog.UI.ViewModels.BlogViewModel
-
-    <section>
-        <h2>Articles</h2>
-
-        @await Component.InvokeAsync(typeof(ListViewComponent), new { list = Model.Posts })
-    </section>
