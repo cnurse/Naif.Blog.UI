@@ -6,20 +6,23 @@ using Naif.Blog.Services;
 
 namespace Naif.Blog.UI.ViewComponents
 {
-	public class TagCloudViewComponent : BaseViewComponent
+	public class TagCloudViewComponent : ViewComponent
 	{
-		public TagCloudViewComponent(IBlogRepository blogRepository, IBlogContext blogContext)
-			: base(blogRepository, blogContext)
+		private IBlogManager _blogManager;
+		
+		public TagCloudViewComponent(IBlogManager blogManager)
 		{
+			_blogManager = blogManager;
+
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync()
+		public async Task<IViewComponentResult> InvokeAsync(string blogId, int count)
 		{
 			Dictionary<string, int> model = null;
 			
 			await Task.Run(() =>
 			{
-				model = BlogRepository.GetTags(Blog.Id);
+				model = _blogManager.GetTags(blogId, count);
 			});
 			
 			// ReSharper disable once Mvc.ViewComponentViewNotResolved

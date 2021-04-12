@@ -6,7 +6,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @await Component.InvokeAsync("Head", Model.Blog)
+    @{
+        var cssFile = $"~/{Model.Blog.Theme}/dist/assets/css/{Model.Blog.Theme}.css";
+    }
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@Model.Blog.Title</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/lib/jqcloud/jqcloud.min.css"/>
+    <link rel="stylesheet" href="@cssFile"/>
+
+    <script type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/popper.js/umd/popper.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/lib/jqcloud/jqcloud.min.js"></script>
 </head>
 <body>
     @await Component.InvokeAsync("NavBar", Model.Blog)
@@ -26,7 +40,7 @@
             <div id="sidePane" class="col-md-4">
                 <Disclaimer Blog="@Model.Blog" />
                 <CategoryList Blog="Model.Blog" />
-                @await Component.InvokeAsync("TagCloud")
+                @await Component.InvokeAsync("TagCloud", new { blogId = Model.Blog.Id, count = -1})
             </div>
         </div>
     </div>
