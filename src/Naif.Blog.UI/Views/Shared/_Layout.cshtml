@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Authorization
+@using Naif.Blog.Razor
 @inject IAuthorizationService AuthorizationService
 
 @model Naif.Blog.UI.ViewModels.BlogViewModel
@@ -38,12 +39,12 @@
                 @RenderBody()
             </div>
             <div id="sidePane" class="col-md-4">
-                <Disclaimer Blog="@Model.Blog" />
-                <CategoryList Blog="Model.Blog" />
+                @(await Html.RenderComponentAsync<Disclaimer>(RenderMode.ServerPrerendered, new { Model.Blog}))
+                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Model.Blog}))
                 @await Component.InvokeAsync("TagCloud", new { blogId = Model.Blog.Id, count = -1})
             </div>
         </div>
     </div>
-    <PageFooter Blog="Model.Blog" />
+    @(await Html.RenderComponentAsync<PageFooter>(RenderMode.ServerPrerendered, new { Model.Blog}))
 </body>
 </html>

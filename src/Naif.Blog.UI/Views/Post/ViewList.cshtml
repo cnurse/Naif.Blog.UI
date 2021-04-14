@@ -1,7 +1,8 @@
-﻿@model Naif.Blog.UI.ViewModels.BlogViewModel
+﻿@using Naif.Blog.Razor
+@model Naif.Blog.UI.ViewModels.BlogViewModel
 
 <section>
     <h2>Articles</h2>
 
-    <PostList Posts="@Model.Posts" />
+    @(await Html.RenderComponentAsync<PostList>(RenderMode.ServerPrerendered, new { Model.Posts}))
 </section>

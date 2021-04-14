@@ -1,5 +1,7 @@
-﻿@model Naif.Blog.UI.ViewModels.BlogViewModel
+﻿@using Naif.Blog.Razor
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
 
 <section>
-    <ViewPost Post="@Model.Post"/>
+    @(await Html.RenderComponentAsync<PostView>(RenderMode.ServerPrerendered, new { Model.Post}))
 </section>
