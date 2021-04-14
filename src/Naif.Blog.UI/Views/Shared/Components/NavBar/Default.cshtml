@@ -19,7 +19,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
-            @(await Html.RenderComponentAsync<Navigation>(RenderMode.ServerPrerendered, new { PostId="", CssClass="navbar-nav"}))
+            @(await Html.RenderComponentAsync<Navigation>(RenderMode.ServerPrerendered, new { Blog = Model, PostId = "", CssClass = "navbar-nav"}))
         </div>
     </div>
 </nav>
