@@ -1,4 +1,4 @@
-﻿@model Dictionary<string, int>
+﻿@model IList<Naif.Blog.Models.Tag>
 
 <section>
   <h2>Tags</h2>
@@ -13,8 +13,8 @@
         @{
             foreach (var tag in Model)
             {
-                var link = $"/tag/{tag.Key}";
-                var element = $"{{text: '{tag.Key}', weight: {tag.Value}, link: '{link}'}},";
+                var link = $"/tag/{tag.Name}";
+                var element = $"{{text: '{tag.Name}', weight: {tag.Count}, link: '{link}'}},";
                 <text>@Html.Raw(element)</text>
             }
         }

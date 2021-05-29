@@ -78,7 +78,7 @@ namespace Naif.Blog.UI.Controllers
                 return new NotFoundResult();
             }
 
-            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Contains(category));
+            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category));
 
             var blogViewModel = new BlogViewModel
             {
@@ -103,7 +103,7 @@ namespace Naif.Blog.UI.Controllers
                 return new NotFoundResult();
             }
 
-            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Contains(tag));
+            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag));
 
             var blogViewModel = new BlogViewModel
             {

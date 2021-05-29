@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Controllers;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
 using Naif.Blog.Services;
 using Naif.Blog.UI.ViewModels;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Naif.Blog.UI.Controllers
 {
@@ -53,7 +53,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Contains(category))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category))
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
@@ -90,7 +90,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Keywords.Contains(tag))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag))
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
