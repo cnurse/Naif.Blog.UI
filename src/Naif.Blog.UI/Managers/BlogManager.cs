@@ -10,13 +10,30 @@ namespace Naif.Blog.UI.Managers
     {
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly ITagRepository _tagRepository;
         
-        public BlogManager(IBlogRepository blogRepository, IPostRepository postRepository)
+        public BlogManager(IBlogRepository blogRepository, IPostRepository postRepository, ITagRepository tagRepository, ICategoryRepository categoryRepository)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
+            _categoryRepository = categoryRepository;
+            _tagRepository = tagRepository;
         }
-        
+
+        public Models.Blog GetBlog(Func<Models.Blog, bool> predicate, bool includeCategoriesAndTags)
+        {
+           var blog = _blogRepository.GetBlog(predicate);
+           
+           if (includeCategoriesAndTags)
+           {
+               blog.Categories = _categoryRepository.GetCategories(blog.Id);
+               blog.Tags = _tagRepository.GetTags(blog.Id);
+           }
+
+           return blog;
+        }
+
         public void DeletePost(Post post)
         {
             _postRepository.DeletePost(post);
@@ -25,8 +42,8 @@ namespace Naif.Blog.UI.Managers
         public Dictionary<string, int> GetCategories(string blogId, int count)
         {
             var list = (count < 0) 
-                ? _blogRepository.GetCategories(blogId).OrderByDescending(c => c.Count) 
-                : _blogRepository.GetCategories(blogId).OrderByDescending(c => c.Count).Take(count);
+                ? _categoryRepository.GetCategories(blogId).OrderByDescending(c => c.Count) 
+                : _categoryRepository.GetCategories(blogId).OrderByDescending(c => c.Count).Take(count);
             return list.ToDictionary(x => x.Name, x=> x.Count);
         }
 
@@ -50,8 +67,8 @@ namespace Naif.Blog.UI.Managers
         public Dictionary<string, int> GetTags(string blogId, int count)
         {
             var list = (count < 0) 
-                ? _blogRepository.GetTags(blogId).OrderByDescending(c => c.Count) 
-                : _blogRepository.GetTags(blogId).OrderByDescending(c => c.Count).Take(count);
+                ? _tagRepository.GetTags(blogId).OrderByDescending(c => c.Count) 
+                : _tagRepository.GetTags(blogId).OrderByDescending(c => c.Count).Take(count);
             return list.ToDictionary(x => x.Name, x=> x.Count);
         }
 

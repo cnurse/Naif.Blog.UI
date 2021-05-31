@@ -9,7 +9,7 @@ namespace Naif.Blog.UI.Controllers
     {
         public ErrorController(IBlogContext blogContext)
         {
-            Blog = blogContext.CurrentBlog;
+            Blog = blogContext.Blog;
         }
 
         public Models.Blog Blog { get; }

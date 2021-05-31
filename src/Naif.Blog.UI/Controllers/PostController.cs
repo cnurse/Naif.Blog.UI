@@ -16,7 +16,7 @@ namespace Naif.Blog.UI.Controllers
 
         public PostController(IBlogContext blogContext, IBlogManager blogManager)
         {
-            Blog = blogContext.CurrentBlog;
+            Blog = blogContext.Blog;
             _blogManager = blogManager;
         }
         
