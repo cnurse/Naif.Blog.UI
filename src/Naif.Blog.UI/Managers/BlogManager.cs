@@ -39,14 +39,6 @@ namespace Naif.Blog.UI.Managers
             _postRepository.DeletePost(post);
         }
 
-        public Dictionary<string, int> GetCategories(string blogId, int count)
-        {
-            var list = (count < 0) 
-                ? _categoryRepository.GetCategories(blogId).OrderByDescending(c => c.Count) 
-                : _categoryRepository.GetCategories(blogId).OrderByDescending(c => c.Count).Take(count);
-            return list.ToDictionary(x => x.Name, x=> x.Count);
-        }
-
         public Post GetPost(string blogId, Func<Post, bool> predicate)
         {
             return _postRepository.GetAllPosts(blogId).SingleOrDefault(predicate);
@@ -62,14 +54,6 @@ namespace Naif.Blog.UI.Managers
         public IEnumerable<Post> GetPosts(string blogId, Func<Post, bool> predicate)
         {
             return _postRepository.GetAllPosts(blogId).Where(predicate);
-        }
-
-        public Dictionary<string, int> GetTags(string blogId, int count)
-        {
-            var list = (count < 0) 
-                ? _tagRepository.GetTags(blogId).OrderByDescending(c => c.Count) 
-                : _tagRepository.GetTags(blogId).OrderByDescending(c => c.Count).Take(count);
-            return list.ToDictionary(x => x.Name, x=> x.Count);
         }
 
         public string SaveMedia(string blogId, MediaObject media)
