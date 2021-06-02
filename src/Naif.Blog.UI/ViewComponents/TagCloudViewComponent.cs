@@ -14,7 +14,9 @@ namespace Naif.Blog.UI.ViewComponents
 			
 			await Task.Run(() =>
 			{
-				model = blog.Tags.OrderByDescending(c => c.Count).Take(count).ToList();
+				model = (count < 0) 
+					? blog.Tags.OrderByDescending(t => t.Count).ToList()
+					: blog.Tags.OrderByDescending(t => t.Count).Take(count).ToList();
 			});
 			
 			// ReSharper disable once Mvc.ViewComponentViewNotResolved
