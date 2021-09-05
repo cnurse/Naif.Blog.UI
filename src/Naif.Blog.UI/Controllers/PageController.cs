@@ -8,7 +8,7 @@ using Naif.Blog.UI.ViewModels;
 
 namespace Naif.Blog.UI.Controllers
 {
-    [Route("Page")]
+    [Route("page")]
     public class PageController : BaseController
     {
         private readonly IBlogManager _blogManager;
@@ -22,8 +22,8 @@ namespace Naif.Blog.UI.Controllers
         public Models.Blog Blog { get; }
         
         [HttpGet]
-        [Route("blog/{detail}/{pageIndex?}")]
-        public IActionResult ViewBlog(string detail, int? pageIndex)
+        [Route("blog/{detail}/{page?}")]
+        public IActionResult ViewBlog(string detail, int? page)
         {
             var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == detail && p.PostType == PostType.Blog);
 
@@ -35,9 +35,10 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = pageIndex ?? 0,
+                PageIndex = page ?? 0,
                 Post = post,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p)),
+                BaseUrl = $"~/page/blog/{detail}"
             };
             
             // ReSharper disable once Mvc.ViewNotResolved
@@ -68,8 +69,8 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
-        [Route("category/{category}/{pageIndex?}")]
-        public IActionResult ViewCategory(string category, int? pageIndex)
+        [Route("category/{category}/{page?}")]
+        public IActionResult ViewCategory(string category, int? page)
         {
             var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == category && p.PostType == PostType.Category);
 
@@ -83,9 +84,11 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = pageIndex ?? 0,
+                PageIndex = page ?? 0,
                 Post = post,
-                Posts = posts
+                Posts = posts,
+                BaseUrl = $"~/page/category/{category}"
+
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
@@ -94,7 +97,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("tag/{tag}/{pageIndex?}")]
-        public IActionResult ViewTag(string tag, int? pageIndex)
+        public IActionResult ViewTag(string tag, int? page)
         {
             var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
 
@@ -108,9 +111,10 @@ namespace Naif.Blog.UI.Controllers
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
-                PageIndex = pageIndex ?? 0,
+                PageIndex = page ?? 0,
                 Post = post,
-                Posts = posts
+                Posts = posts,
+                BaseUrl = $"~/page/tag/{tag}"
             };
 
             // ReSharper disable once Mvc.ViewNotResolved

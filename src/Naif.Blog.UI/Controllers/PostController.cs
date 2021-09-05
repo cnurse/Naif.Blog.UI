@@ -9,7 +9,7 @@ using Naif.Blog.UI.ViewModels;
 
 namespace Naif.Blog.UI.Controllers
 {
-	[Route("Post")]
+	[Route("post")]
     public class PostController : BaseController
     {
         private readonly IBlogManager _blogManager;
@@ -23,7 +23,7 @@ namespace Naif.Blog.UI.Controllers
         public Models.Blog Blog { get; }
 
         [HttpGet]
-        [Route("Cancel/{returnUrl}")]
+        [Route("cancel/{returnUrl}")]
         public IActionResult Cancel(string returnUrl)
         {
             return Redirect(returnUrl);
@@ -31,14 +31,15 @@ namespace Naif.Blog.UI.Controllers
         
         [HttpGet]
         [Route("")]
-        [Route("Index/{page?}")]
+        [Route("index/{page?}")]
         public IActionResult Index(int? page)
         {
             var blogViewModel = new BlogViewModel
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => p.PostType == PostType.Post && p.IsPublished)
+                Posts = _blogManager.GetPosts(Blog.Id, p => p.PostType == PostType.Post && p.IsPublished),
+                BaseUrl = "~/post/index"
             };
             
             // ReSharper disable once Mvc.ViewNotResolved
@@ -53,7 +54,8 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category)),
+                BaseUrl = $"~/category/{category}"
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
@@ -90,7 +92,8 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag))
+                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag)),
+                BaseUrl = $"~/tag/{tag}"
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
