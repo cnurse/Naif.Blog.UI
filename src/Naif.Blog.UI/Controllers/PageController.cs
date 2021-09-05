@@ -38,7 +38,7 @@ namespace Naif.Blog.UI.Controllers
                 PageIndex = page ?? 0,
                 Post = post,
                 Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p)),
-                BaseUrl = $"~/page/blog/{detail}"
+                BaseUrl = $"/page/blog/{detail}"
             };
             
             // ReSharper disable once Mvc.ViewNotResolved
@@ -87,7 +87,7 @@ namespace Naif.Blog.UI.Controllers
                 PageIndex = page ?? 0,
                 Post = post,
                 Posts = posts,
-                BaseUrl = $"~/page/category/{category}"
+                BaseUrl = $"/page/category/{category}"
 
             };
 
@@ -114,7 +114,7 @@ namespace Naif.Blog.UI.Controllers
                 PageIndex = page ?? 0,
                 Post = post,
                 Posts = posts,
-                BaseUrl = $"~/page/tag/{tag}"
+                BaseUrl = $"/page/tag/{tag}"
             };
 
             // ReSharper disable once Mvc.ViewNotResolved
