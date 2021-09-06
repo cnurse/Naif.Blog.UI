@@ -25,7 +25,7 @@ namespace Naif.Blog.UI.Controllers
         [Route("blog/{detail}/{page?}")]
         public IActionResult ViewBlog(string detail, int? page)
         {
-            var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == detail && p.PostType == PostType.Blog);
+            var post = _blogManager.GetPost(Blog.BlogId, p => p.PostTypeDetail == detail && p.PostType == PostType.Blog);
 
             if (post == null)
             {
@@ -37,7 +37,7 @@ namespace Naif.Blog.UI.Controllers
                 Blog = Blog,
                 PageIndex = page ?? 0,
                 Post = post,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p)),
+                Posts = _blogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p)),
                 BaseUrl = $"/page/blog/{detail}"
             };
             
@@ -50,7 +50,7 @@ namespace Naif.Blog.UI.Controllers
         [Route("{slug}")]
         public IActionResult ViewPost(string slug)
         {
-            var post = _blogManager.GetPost(Blog.Id, p => p.Slug == slug);
+            var post = _blogManager.GetPost(Blog.BlogId, p => p.Slug == slug);
 
             if (post == null)
             {
@@ -72,14 +72,14 @@ namespace Naif.Blog.UI.Controllers
         [Route("category/{category}/{page?}")]
         public IActionResult ViewCategory(string category, int? page)
         {
-            var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == category && p.PostType == PostType.Category);
+            var post = _blogManager.GetPost(Blog.BlogId, p => p.PostTypeDetail == category && p.PostType == PostType.Category);
 
             if (post == null)
             {
                 return new NotFoundResult();
             }
 
-            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category));
+            var posts = _blogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category));
 
             var blogViewModel = new BlogViewModel
             {
@@ -99,14 +99,14 @@ namespace Naif.Blog.UI.Controllers
         [Route("tag/{tag}/{pageIndex?}")]
         public IActionResult ViewTag(string tag, int? page)
         {
-            var post = _blogManager.GetPost(Blog.Id, p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
+            var post = _blogManager.GetPost(Blog.BlogId, p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
 
             if (post == null)
             {
                 return new NotFoundResult();
             }
 
-            var posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag));
+            var posts = _blogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag));
 
             var blogViewModel = new BlogViewModel
             {

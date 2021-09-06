@@ -27,8 +27,8 @@ namespace Naif.Blog.UI.Managers
            
            if (includeCategoriesAndTags)
            {
-               blog.Categories = _categoryRepository.GetCategories(blog.Id);
-               blog.Tags = _tagRepository.GetTags(blog.Id);
+               blog.Categories = _categoryRepository.GetCategories(blog.BlogId);
+               blog.Tags = _tagRepository.GetTags(blog.BlogId);
            }
 
            return blog;

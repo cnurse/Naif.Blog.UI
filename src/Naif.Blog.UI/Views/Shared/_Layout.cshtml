@@ -41,7 +41,7 @@
             <div id="sidePane" class="col-md-4">
                 @(await Html.RenderComponentAsync<Disclaimer>(RenderMode.ServerPrerendered, new { Model.Blog}))
                 @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Model.Blog}))
-                @await Component.InvokeAsync("TagCloud", new { blogId = Model.Blog.Id, count = -1})
+                @await Component.InvokeAsync("TagCloud", new { blogId = Model.Blog.BlogId, count = -1})
             </div>
         </div>
     </div>

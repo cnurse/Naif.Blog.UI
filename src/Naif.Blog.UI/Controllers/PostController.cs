@@ -38,7 +38,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => p.PostType == PostType.Post && p.IsPublished),
+                Posts = _blogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post && p.IsPublished),
                 BaseUrl = "/post/index"
             };
             
@@ -54,7 +54,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category)),
+                Posts = _blogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p) && p.Categories.Any(c => c.Name == category)),
                 BaseUrl = $"/category/{category}"
             };
 
@@ -66,7 +66,7 @@ namespace Naif.Blog.UI.Controllers
         [Route("{slug}")]
         public IActionResult ViewPost(string slug)
         {
-            var post = _blogManager.GetPost(Blog.Id, p => p.Slug == slug);
+            var post = _blogManager.GetPost(Blog.BlogId, p => p.Slug == slug);
 
             if (post == null)
             {
@@ -92,7 +92,7 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = page ?? 0,
-                Posts = _blogManager.GetPosts(Blog.Id, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag)),
+                Posts = _blogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p) && p.Tags.Any(c => c.Name == tag)),
                 BaseUrl = $"/tag/{tag}"
             };
 
