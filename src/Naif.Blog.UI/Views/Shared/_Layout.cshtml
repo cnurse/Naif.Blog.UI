@@ -14,13 +14,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@Model.Blog.Title</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">    
     <link rel="stylesheet" href="~/lib/jqcloud/jqcloud.min.css"/>
     <link rel="stylesheet" href="@cssFile"/>
 
-    <script type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="~/lib/popper.js/umd/popper.min.js"></script>
-    <script type="text/javascript" src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>    
+
     <script type="text/javascript" src="~/lib/jqcloud/jqcloud.min.js"></script>
 </head>
 <body>
@@ -39,9 +39,11 @@
                 @RenderBody()
             </div>
             <div id="sidePane" class="col-md-4">
-                @(await Html.RenderComponentAsync<Disclaimer>(RenderMode.ServerPrerendered, new { Model.Blog}))
-                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Model.Blog}))
-                @await Component.InvokeAsync("TagCloud", new { blogId = Model.Blog.BlogId, count = -1})
+                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Model.Blog, Count = 8, CssClass = "nav flex-column"}))
+                <hr/>
+                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Model.Blog, CssClass = "nav flex-column"}))
+                <hr/>
+                @await Component.InvokeAsync("TagCloud", new { blog = Model.Blog, count = -1})
             </div>
         </div>
     </div>

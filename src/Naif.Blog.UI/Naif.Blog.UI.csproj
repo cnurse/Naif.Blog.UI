@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <ProductVersion>2.2.0</ProductVersion>
-    <FileVersion>2.2.0.8</FileVersion>
+    <ProductVersion>2.2.1</ProductVersion>
+    <FileVersion>2.2.1.0</FileVersion>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
   </PropertyGroup>
 
