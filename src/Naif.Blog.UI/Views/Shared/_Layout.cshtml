@@ -31,7 +31,12 @@
     <script type="text/javascript" src="~/lib/jqcloud/jqcloud.min.js"></script>
 </head>
 <body>
-    @await Component.InvokeAsync("NavBar", Model.Blog)
+    @(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
+        new { Blog = Model.Blog, 
+            CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
+            Depth = 1,
+            MenuCssClass = "navbar-nav"
+        }))
     <div class="container body-content">
         <div class="row">
             <div class="col-md-12">
