@@ -1,3 +1,17 @@
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 <h3>Blog Settings</h3>
+
+<h4>@Model.Blog.Title</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="/Admin/EditSettings">
+            <input type="hidden" value="@Model.Blog.UniqueId" />
+            <div class="form-group">
+                <label for="Title"  class="control-label">Title</label>
+                <input value="@Model.Blog.Title" class="form-control" />
+            </div>
+        </form>
+    </div>
+</div>

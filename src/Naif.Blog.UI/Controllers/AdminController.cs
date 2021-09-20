@@ -21,7 +21,7 @@ namespace Naif.Blog.UI.Controllers
         public Models.Blog Blog { get; }
 
         [Route("BlogSettings")]
-        public IActionResult Index()
+        public IActionResult BlogSettings()
         {
             var blogViewModel = new BlogViewModel
             {
@@ -32,5 +32,18 @@ namespace Naif.Blog.UI.Controllers
             return View("BlogSettings", blogViewModel);           
 
         }
+        
+        [Route("EditSettings")]
+        public IActionResult EditSettings(Blog blog)
+        {
+            var blogViewModel = new BlogViewModel
+            {
+                Blog = Blog,
+            };
+            
+            // ReSharper disable once Mvc.ViewNotResolved
+            return Redirect(Blog.HomeRedirectUrl);
+        }
+
     }
 }

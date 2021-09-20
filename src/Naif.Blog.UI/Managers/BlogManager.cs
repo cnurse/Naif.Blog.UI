@@ -56,6 +56,11 @@ namespace Naif.Blog.UI.Managers
             return _postRepository.GetAllPosts(blogId).Where(predicate);
         }
 
+        public void SaveBlog(Models.Blog blog)
+        {
+            _blogRepository.SaveBlog(blog);
+        }
+
         public string SaveMedia(string blogId, MediaObject media)
         {
             return _blogRepository.SaveMedia(blogId, media);
