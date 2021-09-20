@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <ProductVersion>2.3.0</ProductVersion>
-    <FileVersion>2.3.0.1</FileVersion>
+    <FileVersion>2.3.0.2</FileVersion>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
   </PropertyGroup>
 
@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Naif.Blog.Core" Version="3.1.0-beta.1" />
-    <PackageReference Include="Naif.Blog.Razor" Version="1.2.0-beta.9" />
+    <PackageReference Include="Naif.Blog.Core" Version="3.1.0-beta.2" />
+    <PackageReference Include="Naif.Blog.Razor" Version="2.0.0-alpha.5" />
     <PackageReference Include="Naif.Core" Version="3.3.0-beta.4" />
   </ItemGroup>
 
