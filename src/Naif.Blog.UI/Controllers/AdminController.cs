@@ -34,7 +34,7 @@ namespace Naif.Blog.UI.Controllers
         }
         
         [Route("EditSettings")]
-        public IActionResult EditSettings(Blog blog)
+        public IActionResult EditSettings(Models.Blog blog)
         {
             var blogViewModel = new BlogViewModel
             {
