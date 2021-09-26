@@ -1,6 +1,8 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using Naif.Blog.Razor
-@inject IAuthorizationService AuthorizationService
+﻿@using Naif.Blog.Razor
+@using Naif.Blog.Razor.Menus
+@using Naif.Blog.Services
+
+@inject IBlogManager _blogManager
 
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
@@ -33,6 +35,7 @@
 <body>
     @(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
         new { Blog = Model.Blog, 
+            BlogManager = _blogManager,
             CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
             Depth = 1,
             MenuCssClass = "navbar-nav"
@@ -51,9 +54,9 @@
                 @RenderBody()
             </div>
             <div id="sidePane" class="col-md-4">
-                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Model.Blog, Count = 8, CssClass = "nav flex-column"}))
+                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Blog = Model.Blog, BlogManager = _blogManager, Count = 8, CssClass = "nav flex-column"}))
                 <hr/>
-                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Model.Blog, CssClass = "nav flex-column"}))
+                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Blog = Model.Blog, BlogManager = _blogManager, CssClass = "nav flex-column"}))
                 <hr/>
                 @await Component.InvokeAsync("TagCloud", new { blog = Model.Blog, count = -1})
             </div>
