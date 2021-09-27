@@ -1,4 +1,5 @@
-﻿@using Naif.Blog.Razor
+﻿@using Naif.Blog.Models
+@using Naif.Blog.Razor
 @using Naif.Blog.Razor.Menus
 @using Naif.Blog.Services
 
@@ -33,14 +34,13 @@
     <script type="text/javascript" src="~/lib/jqcloud/jqcloud.min.js"></script>
 </head>
 <body>
-    @(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
-        new { Blog = Model.Blog, 
-            BlogManager = _blogManager,
-            CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
-            Depth = 1,
-            MenuCssClass = "navbar-nav"
-        }))
-    <div class="container body-content">
+@(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
+    new { Posts = _blogManager.GetPosts(Model.Blog.BlogId, p => p.PostType != PostType.Post),
+        CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
+        Depth = 1,
+        MenuCssClass = "navbar-nav"
+    }))
+<div class="container body-content">
         <div class="row">
             <div class="col-md-12">
                 <h1>
@@ -54,9 +54,9 @@
                 @RenderBody()
             </div>
             <div id="sidePane" class="col-md-4">
-                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Blog = Model.Blog, BlogManager = _blogManager, Count = 8, CssClass = "nav flex-column"}))
+                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Posts = _blogManager.GetRecentPosts(Model.Blog.BlogId, 8), CssClass = "nav flex-column"}))
                 <hr/>
-                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Blog = Model.Blog, BlogManager = _blogManager, CssClass = "nav flex-column"}))
+                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Categories = Model.Blog.Categories, CssClass = "nav flex-column"}))
                 <hr/>
                 @await Component.InvokeAsync("TagCloud", new { blog = Model.Blog, count = -1})
             </div>
