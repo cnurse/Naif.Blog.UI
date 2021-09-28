@@ -13,6 +13,8 @@ namespace Naif.Blog.UI.ViewModels
         
         public int PageIndex { get; set; }
         
+        public IEnumerable<Post> Pages { get; set; }
+
         public Post Post { get; set; }
 
         public IEnumerable<Post> Posts { get; set; }

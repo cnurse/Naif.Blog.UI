@@ -35,7 +35,8 @@
 </head>
 <body>
 @(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
-    new { Posts = _blogManager.GetPosts(Model.Blog.BlogId, p => p.PostType != PostType.Post),
+    new { Blog = Model.Blog, 
+        Posts = Model.Pages.ToList(),
         CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
         Depth = 1,
         MenuCssClass = "navbar-nav"
@@ -54,7 +55,7 @@
                 @RenderBody()
             </div>
             <div id="sidePane" class="col-md-4">
-                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Posts = _blogManager.GetRecentPosts(Model.Blog.BlogId, 8), CssClass = "nav flex-column"}))
+                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Posts = _blogManager.GetRecentPosts(Model.Blog.BlogId, 8).ToList(), CssClass = "nav flex-column"}))
                 <hr/>
                 @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Categories = Model.Blog.Categories, CssClass = "nav flex-column"}))
                 <hr/>
