@@ -3,11 +3,11 @@
 @model Naif.Blog.UI.ViewModels.EditPostViewModel
 
 @{
-    var _actionUrl = $"/blog/pagelist/savepage";
+    var _actionUrl = $"/page/save";
 
     if (Model.Post.PostType == PostType.Post)
     {
-        _actionUrl = $"/blog/postlist/{ViewData["PageIndex"]}/savepost";
+        _actionUrl = $"/post/list/{ViewData["PageIndex"]}/save";
     }
 
 }

@@ -117,7 +117,7 @@ namespace Naif.Blog.UI.Controllers
             ViewModel.BaseUrl = "/page/list";
 
             // ReSharper disable once Mvc.ViewNotResolved
-            return View("PageList", ViewModel);
+            return View("List", ViewModel);
         }
         
         [HttpGet]
@@ -145,7 +145,7 @@ namespace Naif.Blog.UI.Controllers
             ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Page saved successfully" } };
 
             // ReSharper disable once Mvc.ViewNotResolved
-            return View("PageList", ViewModel);
+            return View("List", ViewModel);
         }
 
 
