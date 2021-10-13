@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Controllers;
 using Naif.Blog.Framework;
@@ -79,5 +80,54 @@ namespace Naif.Blog.UI.Controllers
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
         }
+        
+        [HttpGet]
+        [Route("list")]
+        public IActionResult List(int? page)
+        {
+            var posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
+
+            ViewModel.PageIndex = page ?? 0;
+            ViewModel.Posts = posts;
+            ViewModel.Post = posts.FirstOrDefault();
+            ViewModel.BaseUrl = "/post/list";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+
+        [HttpGet]
+        [Route("list/{page}/post/{postId}")]
+        public IActionResult List(int page, string postId)
+        {
+            var posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
+
+            ViewModel.PageIndex = page;
+            ViewModel.Posts = posts;
+            ViewModel.Post = posts.SingleOrDefault(p => p.PostId == postId);
+            ViewModel.BaseUrl = "/post/list";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+
+        [HttpPost]
+        [Route("list/{page}/save")]
+        public IActionResult Save(int page, PostViewModel post)
+        {
+            Post match = SavePost(post);
+
+            var posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
+
+            ViewModel.PageIndex = page;
+            ViewModel.Posts = posts;
+            ViewModel.Post = match;
+            ViewModel.BaseUrl = "/post/list";
+            ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Post saved successfully" } };
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+
     }
 }

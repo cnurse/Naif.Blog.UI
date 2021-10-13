@@ -18,5 +18,7 @@ namespace Naif.Blog.UI.ViewModels
         public Post Post { get; set; }
 
         public IEnumerable<Post> Posts { get; set; }
+        
+        public string ReturnUrl { get; set; }
     }
 }

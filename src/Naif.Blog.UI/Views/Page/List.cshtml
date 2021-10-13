@@ -1,0 +1,40 @@
+﻿@using Naif.Blog.Razor.Menus
+@using Naif.Blog.UI.ViewModels
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    Layout = "_AdminLayout";
+
+    var pages = Model.Pages.Select(page => new SelectListItem { Value = page.PostId, Text = page.Title }).ToList();
+    pages.Insert(0, new SelectListItem { Value="", Text="<-None Selected->"});
+    var editPostViewModel = new EditPostViewModel()
+    {
+        Messages = Model.Messages,
+        PageIndex = Model.PageIndex,
+        Post = Model.Post.ToPostViewModel(),
+        Pages = pages
+    };
+}
+
+
+<div class="row">
+    <div class="col-lg-4">
+        <h2>Manage Pages</h2>
+        @(await Html.RenderComponentAsync<SideBar>(RenderMode.ServerPrerendered, 
+    new { Posts = Model.Pages.ToList(),
+                PostId="",
+                CssClass = "list-group list-group-flush",
+                SubMenuCssClass = "list-group list-group-flush",
+                Depth = 4,
+                BaseUrl = Model.BaseUrl,
+                SelectedPost = Model.Post
+            }))
+            
+    </div>
+    <div class="col-lg-8">
+        <h2>Edit Post - @Model.Post.Title</h2>
+        @await Html.PartialAsync("_EditPost.cshtml", editPostViewModel);
+    </div>
+</div>
+

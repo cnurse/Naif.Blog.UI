@@ -1,0 +1,148 @@
+﻿@using Naif.Blog.Models
+
+@model Naif.Blog.UI.ViewModels.EditPostViewModel
+
+@{
+    var _actionUrl = $"/blog/pagelist/savepage";
+
+    if (Model.Post.PostType == PostType.Post)
+    {
+        _actionUrl = $"/blog/postlist/{ViewData["PageIndex"]}/savepost";
+    }
+
+}
+
+<form class="g-3" action="@_actionUrl" method="post">
+    @{
+        if (Model.Messages != null)
+        {
+            foreach (var message in Model.Messages)
+            {
+                string cssClass = String.Empty;
+                switch (message.Type)
+                {
+                    case MessageType.Info:
+                        cssClass = "alert alert-info";
+                        break;
+                    case MessageType.Error:
+                        cssClass = "alert alert-danger";
+                        break;
+                    case MessageType.Success:
+                        cssClass = "alert alert-success";
+                        break;
+                }
+                <div class="@cssClass" role="alert">
+                    @message.Text
+                </div>
+            }
+        }
+    }
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.PostId" class="col-sm-2 col-form-label">Post Id</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Post.PostId" class="form-control-plaintext" readonly />
+        </div>
+    </div>
+    
+    @{
+        if (Model.Post.PostType != PostType.Post)
+        {
+            <div class="mb-3 row">
+                <label asp-for="@Model.Post.ParentPostId" class="col-sm-2 col-form-label">Parent Post Id</label>
+                <div class="col-sm-10">
+                    <select asp-for="@Model.Post.ParentPostId" asp-items="@Model.Pages" class="form-control"></select>
+                </div>
+            </div>
+        }
+    }
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.PostType" class="col-sm-2 col-form-label">Post Type</label>
+        <div class="col-sm-3">
+            <select asp-for="@Model.Post.PostType" asp-items="Html.GetEnumSelectList<PostType>()" class="form-select"></select>
+        </div>
+        @{
+            if (Model.Post.PostType != PostType.Post)
+            {
+                <div class="col-sm-3"></div>
+                <label asp-for="@Model.Post.PageOrder" class="col-sm-2 col-form-label">Page Order</label>
+                <div class="col-sm-2">
+                    <input asp-for="@Model.Post.PageOrder" class="form-control" />
+                </div>
+            }
+        }
+    </div>
+
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.Title"  class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Post.Title" class="form-control" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.SubTitle" class="col-sm-2 col-form-label">SubTitle</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Post.SubTitle" class="form-control"/>
+        </div>
+    </div>
+    
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.Slug"  class="col-sm-2 col-form-label">Slug</label>
+        <div class="col-sm-5">
+            <input asp-for="@Model.Post.Slug" class="form-control" />
+        </div>
+        <label asp-for="@Model.Post.Author"  class="col-sm-2 col-form-label">Author</label>
+        <div class="col-sm-3">
+            <input asp-for="@Model.Post.Author" class="form-control" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.Excerpt"  class="col-sm-2 col-form-label">Excerpt</label>
+        <div class="col-sm-10">
+            <textarea asp-for="@Model.Post.Excerpt" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.Content"  class="col-sm-2 col-form-label">Content</label>
+        <div class="col-sm-10">
+            <textarea asp-for="@Model.Post.Content" class="form-control" rows="5"></textarea>
+        </div>
+    </div>
+    
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.Categories"  class="col-sm-2 col-form-label">Categories</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Post.Categories" class="form-control" />
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Post.Tags"  class="col-sm-2 col-form-label">Tags</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Post.Tags" class="form-control" />
+        </div>
+    </div>
+
+    <div class="mb-3 row form-switch">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+            <input asp-for="@Model.Post.IncludeInLists" class="form-check-input"/>
+            <label asp-for="@Model.Post.IncludeInLists" class="form-check-label">Include In Lists?</label>
+        </div>
+        <div class="col-sm-3">
+            <input asp-for="@Model.Post.IsPublished" class="form-check-input"/>
+            <label asp-for="@Model.Post.IsPublished" class="form-check-label">Published?</label>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary me-md-2 btn-lg">Save</button>
+    </div>
+
+</form>

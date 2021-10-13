@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@using Naif.Blog.Razor
+@using Naif.Blog.Razor.Menus
+
+@inject IAuthorizationService AuthorizationService
+@inject IWebHostEnvironment  env
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    @{
+        var theme = Model.Blog.Theme;
+        
+        var cssFile = $"/themes/{theme}/css/{theme}.css";
+    }
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@Model.Blog.Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">    
+    <link rel="stylesheet" href="~/lib/jqcloud/jqcloud.min.css"/>
+    <link rel="stylesheet" href="~/themes/admin/css/admin.css"/>
+    @{
+        if (!String.IsNullOrEmpty(theme))
+        {
+            <link rel="stylesheet" href="@cssFile"/>
+        }
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>    
+
+    <script type="text/javascript" src="~/lib/jqcloud/jqcloud.min.js"></script>
+</head>
+<body>
+@(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
+    new { Blog = Model.Blog, 
+        Posts = Model.Pages.ToList(),
+        CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
+        Depth = 4,
+        IncludeProfilePicture = true,
+        IncludeSignIn = env.IsDevelopment(),
+        IncludeSignUp = env.IsDevelopment(),
+        MenuCssClass = "navbar-nav",
+        SubMenuCssClass = "dropdown-menu dropdown-menu-dark"
+    }))
+    <div class="container body-content">
+        <div class="row">
+            <div id="mainPane" class="col-md-12">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @(await Html.RenderComponentAsync<PageFooter>(RenderMode.ServerPrerendered, new { Model.Blog}))
+</body>
+</html>

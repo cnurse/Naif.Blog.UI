@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Naif.Blog.Controllers;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
@@ -22,11 +24,38 @@ namespace Naif.Blog.UI.Controllers
 
         }
 
-
         protected Models.Blog Blog { get; }
         
         protected IBlogManager BlogManager { get; }
         
         protected BlogViewModel ViewModel { get; set; }
+
+        protected Post SavePost(PostViewModel postViewModel)
+        {
+            if (postViewModel.ParentPostId == null)
+            {
+                postViewModel.ParentPostId = String.Empty;
+            }
+            Post match = ViewModel.Pages.SingleOrDefault(p => p.PostId == postViewModel.PostId);
+
+            if (match != null)
+            {
+                //Merge PostViewModel into matched Post
+                postViewModel.ToPost(match);
+
+                match.LastModified = DateTime.UtcNow;
+
+                if (!match.IsPublished)
+                {
+                    match.PubDate = DateTime.UtcNow;
+                }
+
+                BlogManager.SavePost(match);
+            }
+
+            return match;
+        }
+
+
     }
 }

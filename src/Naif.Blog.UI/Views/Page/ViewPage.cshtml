@@ -1,12 +1,32 @@
-﻿@model Naif.Blog.UI.ViewModels.BlogViewModel
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
 
 @{
     if (!string.IsNullOrEmpty(Model.Post.Template))
     {
         Layout = $"~/Views/Themes/{Model.Blog.Theme}/Templates/{Model.Post.Template}.cshtml";
     }
+
+    var post = Model.Post;
 }
 
-<section>
-    <article>@Html.Raw(Model.Post.Content)</article>
-</section>
+<article class="page">
+    <header>
+        <div class="row">
+            <div class="col-lg-11">
+                <h1>@post.Title</h1>
+            </div>
+            <div class="col-lg-1">
+                <h1><a class="link" asp-controller="Page" asp-action="Edit" asp-route-postId="@post.PostId"><i class="bi bi-pencil"></i></a></h1>
+            </div>
+        </div>
+        @{
+            if (!string.IsNullOrEmpty(post.SubTitle))
+            {
+                <h2>@post.SubTitle</h2>
+            }
+        }
+    </header>
+    <section>@Html.Raw(post.Content)</section>
+</article>

@@ -1,0 +1,24 @@
+﻿@using Naif.Blog.UI.ViewModels
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    if (!string.IsNullOrEmpty(Model.Post.Template))
+    {
+        Layout = $"~/Views/Themes/{Model.Blog.Theme}/Templates/{Model.Post.Template}.cshtml";
+    }
+    var pages = Model.Pages.Select(page => new SelectListItem { Value = page.PostId, Text = page.Title }).ToList();
+    pages.Insert(0, new SelectListItem { Value="", Text="<-None Selected->"});
+
+    var editPostViewModel = new EditPostViewModel()
+    {
+        Messages = Model.Messages,
+        PageIndex = Model.PageIndex,
+        Post = Model.Post.ToPostViewModel(),
+        Pages = pages
+    };
+}
+
+<h2>Edit Post - @Model.Post.Title</h2>
+@await Html.PartialAsync("_EditPost.cshtml", editPostViewModel);
+

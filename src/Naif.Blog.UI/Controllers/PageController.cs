@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Naif.Blog.Controllers;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
 using Naif.Blog.Services;
@@ -96,5 +95,59 @@ namespace Naif.Blog.UI.Controllers
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
         }
+
+        [Route("list")]
+        public IActionResult List()
+        {
+            var post = ViewModel.Pages.Where(p => p.ParentPostId == "").OrderBy(p => p.PageOrder).FirstOrDefault();
+
+            ViewModel.Post = post;
+            ViewModel.BaseUrl = "/page/list";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+
+        [HttpGet]
+        [Route("list/page/{postId}")]
+        public IActionResult PageList(string postId)
+        {
+            var post = ViewModel.Pages.SingleOrDefault(p => p.PostId == postId);
+            ViewModel.Post = post;
+            ViewModel.BaseUrl = "/page/list";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("PageList", ViewModel);
+        }
+        
+        [HttpGet]
+        [Route("edit/{postId}")]
+        public IActionResult Edit(string postId)
+        {
+            var post = ViewModel.Pages.SingleOrDefault(p => p.PostId == postId);
+            ViewModel.Post = post;
+            if (post != null && !string.IsNullOrEmpty(post.Slug))
+            {
+                ViewModel.ReturnUrl = $"/page/{post.Slug}";
+            }
+
+            return View("EditPage", ViewModel);
+        }
+
+        [HttpPost]
+        [Route("save")]
+        public IActionResult SavePage(PostViewModel post)
+        {
+            Post match = SavePost(post);
+
+            ViewModel.Post = match;
+            ViewModel.BaseUrl = "/page/list";
+            ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Page saved successfully" } };
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("PageList", ViewModel);
+        }
+
+
     }
 }

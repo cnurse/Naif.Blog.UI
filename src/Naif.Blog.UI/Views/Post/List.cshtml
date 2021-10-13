@@ -1,0 +1,36 @@
+﻿@using Naif.Blog.Razor
+@using Naif.Blog.Razor.Lists
+@using Naif.Blog.UI.ViewModels
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    Layout = "_AdminLayout";
+    var editPostViewModel = new EditPostViewModel()
+    {
+        Messages = Model.Messages,
+        PageIndex = Model.PageIndex,
+        Post = Model.Post.ToPostViewModel()
+    };
+
+}
+
+<div class="row">
+    <div class="col-lg-4">
+        <h2>Manage Posts</h2>
+        @(await Html.RenderComponentAsync<PagedPostList>(RenderMode.ServerPrerendered, new
+        {
+            BaseUrl = Model.BaseUrl,
+            Filter = "", 
+            PageCount = 10, 
+            PageIndex = Model.PageIndex, 
+            Posts = Model.Posts,
+            Mode = ListMode.Table
+        }))
+        
+    </div>
+    <div class="col-lg-8">
+        <h2>Edit Post - @Model.Post.Title</h2>
+        @await Html.PartialAsync("_EditPost.cshtml", editPostViewModel);
+    </div>
+</div>
