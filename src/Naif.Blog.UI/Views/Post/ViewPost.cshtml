@@ -1,7 +1,9 @@
 ﻿@using Naif.Blog.Razor
 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 <section>
-    @(await Html.RenderComponentAsync<PostView>(RenderMode.ServerPrerendered, new { Model.Post}))
+    <component type="typeof(PostView)" render-mode="ServerPrerendered" param-Post="@Model.Post"></component>
 </section>
