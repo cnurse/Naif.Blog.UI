@@ -5,13 +5,17 @@
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 @{
-    var editUrl = $"/post/edit/@{Model.Post.PostId}";
+    var editUrl = $"/post/edit/{Model.Post.PostId}";
+    var categoryUrl = "/category";
+    var tagUrl = "/Tag";
 }
 
 <section>
     <component type="typeof(PostView)" 
                render-mode="ServerPrerendered"
                param-Post="@Model.Post"
-               param-EditUrl="editUrl">
+               param-EditUrl="editUrl"
+               param-CategoryUrl="categoryUrl"
+               param-TagUrl = "tagUrl">
     </component>
 </section>
