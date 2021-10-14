@@ -6,6 +6,8 @@ namespace Naif.Blog.UI.ViewModels
 {
     public class EditPostViewModel
     {
+        public string ActionUrl { get; set; }
+        
         public IList<Message> Messages { get; set; }
 
         public int PageIndex { get; set; }

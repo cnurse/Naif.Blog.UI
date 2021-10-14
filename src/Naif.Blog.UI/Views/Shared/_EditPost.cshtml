@@ -6,12 +6,7 @@
 @model Naif.Blog.UI.ViewModels.EditPostViewModel
 
 @{
-    var _actionUrl = $"/page/save";
-
-    if (Model.Post.PostType == PostType.Post)
-    {
-        _actionUrl = $"/post/list/{ViewData["PageIndex"]}/save";
-    }
+    var _actionUrl = Model.ActionUrl;
 
     if (!String.IsNullOrEmpty(Model.ReturnUrl))
     {

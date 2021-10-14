@@ -10,6 +10,7 @@
     pages.Insert(0, new SelectListItem { Value="", Text="<-None Selected->"});
     var editPostViewModel = new EditPostViewModel()
     {
+        ActionUrl = "/page/save",
         Messages = Model.Messages,
         PageIndex = Model.PageIndex,
         Post = Model.Post.ToPostViewModel(),
