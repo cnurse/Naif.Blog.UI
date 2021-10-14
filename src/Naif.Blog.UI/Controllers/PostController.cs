@@ -138,7 +138,7 @@ namespace Naif.Blog.UI.Controllers
             ViewModel.Post = post;
             if (post != null && !string.IsNullOrEmpty(post.Slug))
             {
-                ViewModel.ReturnUrl = $"/{post.Slug}";
+                ViewModel.ReturnUrl = $"/post/{post.Slug}";
             }
 
             return View("EditPost", ViewModel);

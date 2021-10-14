@@ -8,7 +8,7 @@
     Layout = "_AdminLayout";
     var editPostViewModel = new EditPostViewModel()
     {
-        ActionUrl = $"/post/list/{ViewData["PageIndex"]}/save",
+        ActionUrl = $"/post/list/{Model.PageIndex}/save",
         Messages = Model.Messages,
         PageIndex = Model.PageIndex,
         Post = Model.Post.ToPostViewModel()
