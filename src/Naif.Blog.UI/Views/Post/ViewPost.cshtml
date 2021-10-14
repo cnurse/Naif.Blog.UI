@@ -5,5 +5,9 @@
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 <section>
-    <component type="typeof(PostView)" render-mode="ServerPrerendered" param-Post="@Model.Post"></component>
+    <component type="typeof(PostView)" 
+               render-mode="ServerPrerendered"
+               param-Post="@Model.Post"
+               param-EditUrl="/post/edit/@Model.Post.PostId">
+    </component>
 </section>
