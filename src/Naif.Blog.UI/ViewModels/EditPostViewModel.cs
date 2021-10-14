@@ -13,5 +13,7 @@ namespace Naif.Blog.UI.ViewModels
         public PostViewModel Post { get; set; }
 
         public List<SelectListItem> Pages { get; set; }
+                
+        public string ReturnUrl { get; set; }
     }
 }

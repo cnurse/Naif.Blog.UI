@@ -12,6 +12,10 @@
         _actionUrl = $"/post/list/{ViewData["PageIndex"]}/save";
     }
 
+    if (!String.IsNullOrEmpty(Model.ReturnUrl))
+    {
+        _actionUrl += $"?returnUrl={Model.ReturnUrl}";
+    }
 }
 
 <form class="g-3" action="@_actionUrl" method="post">

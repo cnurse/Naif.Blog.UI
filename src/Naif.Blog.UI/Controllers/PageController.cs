@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -110,7 +111,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("list/page/{postId}")]
-        public IActionResult PageList(string postId)
+        public IActionResult List(string postId)
         {
             var post = ViewModel.Pages.SingleOrDefault(p => p.PostId == postId);
             ViewModel.Post = post;
@@ -136,16 +137,24 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpPost]
         [Route("save")]
-        public IActionResult SavePage(PostViewModel post)
+        public IActionResult Save([FromBody] PostViewModel post, [FromQuery] string returnUrl)
         {
             Post match = SavePost(post);
 
-            ViewModel.Post = match;
-            ViewModel.BaseUrl = "/page/list";
-            ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Page saved successfully" } };
+            IActionResult result;
+            if (String.IsNullOrEmpty(returnUrl))
+            {
+                ViewModel.Post = match;
+                ViewModel.BaseUrl = "/page/list";
+                ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Page saved successfully" } };
+                result = View("List", ViewModel);
+            }
+            else
+            {
+                result = Redirect(returnUrl);
+            }
 
-            // ReSharper disable once Mvc.ViewNotResolved
-            return View("List", ViewModel);
+            return result;
         }
 
 
