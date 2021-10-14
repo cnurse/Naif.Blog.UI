@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Controllers;
@@ -129,5 +130,27 @@ namespace Naif.Blog.UI.Controllers
             return View("List", ViewModel);
         }
 
+        [HttpGet]
+        [Route("edit/{postId}")]
+        public IActionResult Edit(string postId)
+        {
+            var post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
+            ViewModel.Post = post;
+            if (post != null && !string.IsNullOrEmpty(post.Slug))
+            {
+                ViewModel.ReturnUrl = $"/{post.Slug}";
+            }
+
+            return View("EditPost", ViewModel);
+        }
+
+        [HttpPost]
+        [Route("save")]
+        public IActionResult Save(PostViewModel post, string returnUrl)
+        {
+            Post match = SavePost(post);
+
+            return Redirect(returnUrl);
+        }
     }
 }

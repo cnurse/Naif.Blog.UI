@@ -1,0 +1,21 @@
+@model TModel
+@using Naif.Blog.UI.ViewModels
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    var pages = Model.Pages.Select(page => new SelectListItem { Value = page.PostId, Text = page.Title }).ToList();
+    pages.Insert(0, new SelectListItem { Value="", Text="<-None Selected->"});
+
+    var editPostViewModel = new EditPostViewModel()
+    {
+        Messages = Model.Messages,
+        PageIndex = Model.PageIndex,
+        Post = Model.Post.ToPostViewModel(),
+        Pages = pages,
+        ReturnUrl = Model.ReturnUrl
+    };
+}
+
+<h2>Edit Post - @Model.Post.Title</h2>
+@await Html.PartialAsync("../Shared/_EditPost.cshtml", editPostViewModel);
