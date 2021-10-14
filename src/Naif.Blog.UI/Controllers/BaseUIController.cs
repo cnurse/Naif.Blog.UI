@@ -36,7 +36,8 @@ namespace Naif.Blog.UI.Controllers
             {
                 postViewModel.ParentPostId = String.Empty;
             }
-            Post match = ViewModel.Pages.SingleOrDefault(p => p.PostId == postViewModel.PostId);
+            
+            Post match = BlogManager.GetPost(Blog.BlogId, p => p.PostId == postViewModel.PostId);
 
             if (match != null)
             {
