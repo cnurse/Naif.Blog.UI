@@ -1,5 +1,9 @@
-﻿@using Naif.Blog.Razor
-@using Naif.Blog.Razor.Lists
+﻿@using Naif.Blog.Razor.Lists
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
 @{
     if (!string.IsNullOrEmpty(Model.Post.Template))
     {
@@ -14,5 +18,10 @@
 <section>
     <h2>Articles</h2>
 
-    @(await Html.RenderComponentAsync<PostList>(RenderMode.ServerPrerendered, new { Model.Posts}))
+    <component type="typeof(PostList)" 
+               render-mode="ServerPrerendered"
+               param-Posts="@Model.Posts"
+               param-BaseUrl="@Model.BaseUrl">
+    </component>
+
 </section>
