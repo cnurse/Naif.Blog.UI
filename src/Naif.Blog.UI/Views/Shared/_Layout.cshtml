@@ -1,8 +1,10 @@
-﻿@using Naif.Blog.Models
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
 @using Naif.Blog.Razor
 @using Naif.Blog.Razor.Menus
 @using Naif.Blog.Services
 
+@inject IWebHostEnvironment  env
 @inject IBlogManager _blogManager
 
 @model Naif.Blog.UI.ViewModels.BlogViewModel
@@ -38,10 +40,14 @@
     new { Blog = Model.Blog, 
         Posts = Model.Pages.ToList(),
         CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
-        Depth = 1,
-        MenuCssClass = "navbar-nav"
+        Depth = 4,
+        IncludeProfilePicture = true,
+        IncludeSignIn = env.IsDevelopment(),
+        IncludeSignUp = env.IsDevelopment(),
+        MenuCssClass = "navbar-nav",
+        SubMenuCssClass = "dropdown-menu dropdown-menu-dark"
     }))
-<div class="container body-content">
+    <div class="container body-content">
         <div class="row">
             <div class="col-md-12">
                 <h1>

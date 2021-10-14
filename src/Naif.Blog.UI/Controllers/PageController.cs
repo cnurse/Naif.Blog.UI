@@ -137,7 +137,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpPost]
         [Route("save")]
-        public IActionResult Save([FromBody] PostViewModel post, [FromQuery] string returnUrl)
+        public IActionResult Save(PostViewModel post, string returnUrl)
         {
             Post match = SavePost(post);
 
@@ -156,6 +156,7 @@ namespace Naif.Blog.UI.Controllers
 
             return result;
         }
+
 
 
     }
