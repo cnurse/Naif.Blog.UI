@@ -1,5 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+@using System.Net
 @using Naif.Blog.Models
 
 @model Naif.Blog.UI.ViewModels.EditPostViewModel
@@ -14,7 +15,8 @@
 
     if (!String.IsNullOrEmpty(Model.ReturnUrl))
     {
-        _actionUrl += $"?returnUrl={Model.ReturnUrl}";
+        var returnUrl = WebUtility.UrlEncode(Model.ReturnUrl);
+        _actionUrl += $"?returnUrl={returnUrl}";
     }
 }
 
