@@ -4,13 +4,17 @@
 
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
+@{
+    var editUrl = "/post/edit";
+}
+
 <section>
     <h2>Articles</h2>
 
     <component type="typeof(PostList)" 
                render-mode="ServerPrerendered"
                param-Posts="@Model.Posts"
-               param-BaseUrl="/post/edit"
+               param-BaseUrl="editUrl"
                param-ReturnUrl="@Model.ReturnUrl">
     </component>
 </section>

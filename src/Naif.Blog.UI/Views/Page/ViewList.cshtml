@@ -9,6 +9,8 @@
     {
         Layout = $"~/Views/Themes/{Model.Blog.Theme}/Templates/{Model.Post.Template}.cshtml";
     }
+    
+    var editUrl = "/post/edit";
 }
 
 <section>
@@ -21,7 +23,7 @@
     <component type="typeof(PostList)" 
                render-mode="ServerPrerendered"
                param-Posts="@Model.Posts"
-               param-BaseUrl="/post/edit"
+               param-BaseUrl="editUrl"
                param-ReturnUrl="@Model.ReturnUrl">
     </component>
 
