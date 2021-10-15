@@ -5,7 +5,7 @@
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 @{
-    var editUrl = $"/post/edit/{Model.Post.PostId}";
+    var editUrl = $"/post/edit/{Model.Post.PostId}?returnUrl={Model.Post.Slug}";
     var categoryUrl = "/category";
     var tagUrl = "/Tag";
 }

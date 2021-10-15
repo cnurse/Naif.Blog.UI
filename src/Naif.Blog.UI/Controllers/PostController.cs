@@ -30,8 +30,9 @@ namespace Naif.Blog.UI.Controllers
         [Route("index/{page?}")]
         public IActionResult Index(int? page)
         {
-            ViewModel.PageIndex = page ?? 0;
-            ViewModel.BaseUrl = "/post/index";
+            var index = page ?? 0;
+            ViewModel.PageIndex = index;
+            ViewModel.ReturnUrl = $"/post/index/{index}";
             
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);           
@@ -41,11 +42,12 @@ namespace Naif.Blog.UI.Controllers
         [Route("~/category/{category}/{page?}")]
         public IActionResult ViewCategory(string category, int? page)
         {
+            var index = page ?? 0;
             var posts = ViewModel.Posts.Where(p => p.Categories.Any(c => c.Name == category));
 
             ViewModel.Posts = posts;
-            ViewModel.PageIndex = page ?? 0;
-            ViewModel.BaseUrl = $"/category/{category}";
+            ViewModel.PageIndex = index;
+            ViewModel.BaseUrl = $"/category/{category}/{index}";
             
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
@@ -72,26 +74,30 @@ namespace Naif.Blog.UI.Controllers
         [Route("~/tag/{tag}/{page?}")]
         public IActionResult ViewTag(string tag, int? page)
         {
+            var index = page ?? 0;
             var posts = ViewModel.Posts.Where(p => p.Tags.Any(c => c.Name == tag));
 
             ViewModel.Posts = posts;
             ViewModel.PageIndex = page ?? 0;
-            ViewModel.BaseUrl = $"/tag/{tag}";
+            ViewModel.BaseUrl = $"/tag/{tag}/{index}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
         }
         
         [HttpGet]
-        [Route("index/{page}/edit/{postId}")]
-        public IActionResult Index(int page, string postId)
+        [Route("edit/{postId}")]
+        public IActionResult Edit(string postId, string returnUrl)
         {
-            ViewModel.PageIndex = page;
-            ViewModel.Post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
-            ViewModel.BaseUrl = "/post/index";
+            var post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
+            ViewModel.Post = post;
+            
+            if (!String.IsNullOrEmpty(returnUrl))
+            {
+                ViewModel.ReturnUrl = returnUrl;
+            }
 
-            // ReSharper disable once Mvc.ViewNotResolved
-            return View("ViewList", ViewModel);
+            return View("EditPost", ViewModel);
         }
 
         [HttpGet]
@@ -134,20 +140,6 @@ namespace Naif.Blog.UI.Controllers
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("List", ViewModel);
-        }
-
-        [HttpGet]
-        [Route("edit/{postId}")]
-        public IActionResult Edit(string postId)
-        {
-            var post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
-            ViewModel.Post = post;
-            if (post != null && !string.IsNullOrEmpty(post.Slug))
-            {
-                ViewModel.ReturnUrl = $"/post/{post.Slug}";
-            }
-
-            return View("EditPost", ViewModel);
         }
 
         [HttpPost]
