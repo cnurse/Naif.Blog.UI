@@ -32,6 +32,7 @@ namespace Naif.Blog.UI.Controllers
         {
             var index = page ?? 0;
             ViewModel.PageIndex = index;
+            ViewModel.BaseUrl = $"/post/index";
             ViewModel.ReturnUrl = $"/post/index/{index}";
             
             // ReSharper disable once Mvc.ViewNotResolved
@@ -47,7 +48,8 @@ namespace Naif.Blog.UI.Controllers
 
             ViewModel.Posts = posts;
             ViewModel.PageIndex = index;
-            ViewModel.BaseUrl = $"/category/{category}/{index}";
+            ViewModel.BaseUrl = $"/category/{category}";
+            ViewModel.ReturnUrl = $"/category/{category}/{index}";
             
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
@@ -78,13 +80,28 @@ namespace Naif.Blog.UI.Controllers
             var posts = ViewModel.Posts.Where(p => p.Tags.Any(c => c.Name == tag));
 
             ViewModel.Posts = posts;
-            ViewModel.PageIndex = page ?? 0;
-            ViewModel.BaseUrl = $"/tag/{tag}/{index}";
+            ViewModel.PageIndex = index;
+            ViewModel.BaseUrl = $"/tag/{tag}";
+            ViewModel.ReturnUrl = $"/tag/{tag}/{index}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
         }
         
+        [HttpGet]
+        [Route("list")]
+        public IActionResult List(int? page)
+        {
+            var index = page ?? 0;
+            ViewModel.PageIndex = index;
+            ViewModel.Post = ViewModel.Posts.FirstOrDefault();
+            ViewModel.BaseUrl = "/post/list";
+            ViewModel.ReturnUrl = $"/post/list/{index}";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+
         [HttpGet]
         [Route("edit/{postId}")]
         public IActionResult Edit(string postId, string returnUrl)
@@ -101,24 +118,13 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
-        [Route("list")]
-        public IActionResult List(int? page)
-        {
-            ViewModel.PageIndex = page ?? 0;
-            ViewModel.Post = ViewModel.Posts.FirstOrDefault();
-            ViewModel.BaseUrl = "/post/list";
-
-            // ReSharper disable once Mvc.ViewNotResolved
-            return View("List", ViewModel);
-        }
-
-        [HttpGet]
         [Route("list/{page}/edit/{postId}")]
-        public IActionResult List(int page, string postId)
+        public IActionResult Edit(int page, string postId)
         {
             ViewModel.PageIndex = page;
             ViewModel.Post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
             ViewModel.BaseUrl = "/post/list";
+            ViewModel.ReturnUrl = $"/post/list/{page}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("List", ViewModel);
