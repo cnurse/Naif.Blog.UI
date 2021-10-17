@@ -1,0 +1,73 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    Layout = "_AdminLayout";
+    var _actionUrl = "/blog/edit";
+}
+
+<h2>Edit Blog Settings - @Model.Blog.BlogId</h2>
+
+<form class="g-3" action="@_actionUrl" method="post">
+    <input asp-for="@Model.Blog.BlogId" type="hidden"/>
+    
+    <div class="mb-3 row">
+        <label asp-for="@Model.Blog.UniqueId" class="col-sm-2 col-form-label">Unique Id</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Blog.UniqueId" class="form-control-plaintext" readonly/>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Blog.Title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Blog.Title" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Blog.ByLine" class="col-sm-2 col-form-label">ByLine</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Blog.ByLine" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Blog.Disclaimer" class="col-sm-2 col-form-label">Disclaimer</label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Blog.Disclaimer" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Blog.LocalUrl" class="col-sm-2 col-form-label">Local Url</label>
+        <div class="col-sm-2">
+            <input asp-for="@Model.Blog.LocalUrl" class="form-control"/>
+        </div>
+        <label asp-for="@Model.Blog.Url" class="col-sm-2 col-form-label">Url</label>
+        <div class="col-sm-2">
+            <input asp-for="@Model.Blog.Url" class="form-control"/>
+        </div>
+        <label asp-for="@Model.Blog.HomeRedirectUrl" class="col-sm-2 col-form-label">Home Redirect Url</label>
+        <div class="col-sm-2">
+            <input asp-for="@Model.Blog.HomeRedirectUrl" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label asp-for="@Model.Blog.Theme" class="col-sm-2 col-form-label">Theme</label>
+        <div class="col-sm-4">
+            <input asp-for="@Model.Blog.Theme" class="form-control"/>
+        </div>
+        <label asp-for="@Model.Blog.GoogleAnalytics" class="col-sm-2 col-form-label">Google Analytics Code</label>
+        <div class="col-sm-4">
+            <input asp-for="@Model.Blog.GoogleAnalytics" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-primary me-md-2 btn-lg">Save</button>
+    </div>
+
+</form>
