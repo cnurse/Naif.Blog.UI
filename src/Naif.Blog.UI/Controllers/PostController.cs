@@ -146,7 +146,7 @@ namespace Naif.Blog.UI.Controllers
             return View("List", ViewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("delete/{postId}")]
         public IActionResult Delete(string postId, string returnUrl)
         {
