@@ -93,6 +93,7 @@ namespace Naif.Blog.UI.Controllers
         public IActionResult List(int? page)
         {
             var index = page ?? 0;
+            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
             ViewModel.PageIndex = index;
             ViewModel.Post = ViewModel.Posts.FirstOrDefault();
             ViewModel.BaseUrl = "/post/list";
@@ -106,6 +107,7 @@ namespace Naif.Blog.UI.Controllers
         [Route("list/{page}/add")]
         public IActionResult Add(int page)
         {
+            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
             ViewModel.PageIndex = page;
             ViewModel.Post = new Post();
             ViewModel.BaseUrl = "/post/list";
@@ -134,6 +136,7 @@ namespace Naif.Blog.UI.Controllers
         [Route("list/{page}/edit/{postId}")]
         public IActionResult Edit(int page, string postId)
         {
+            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
             ViewModel.PageIndex = page;
             ViewModel.Post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
             ViewModel.BaseUrl = "/post/list";
@@ -149,10 +152,8 @@ namespace Naif.Blog.UI.Controllers
         {
             Post match = SavePost(post);
 
-            var posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
-
             ViewModel.PageIndex = page;
-            ViewModel.Posts = posts;
+            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
             ViewModel.Post = match;
             ViewModel.BaseUrl = "/post/list";
             ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Post saved successfully" } };
