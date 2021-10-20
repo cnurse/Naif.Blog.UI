@@ -7,7 +7,7 @@
 
 @{
     var _actionUrl = Model.ActionUrl;
-    var _deleteUrl = $"/post/delete/{Model.Post.PostId}?";
+    var _deleteUrl = $"/post/delete/{Model.Post.PostId}";
 
     if (!String.IsNullOrEmpty(Model.ReturnUrl))
     {
