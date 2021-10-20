@@ -35,7 +35,14 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a role="button" class="btn btn-primary me-md-2 btn-lg" href="@addUrl">Add Post</a>
         </div>
-        <h2>Edit Post - @Model.Post.Title</h2>
+        @if (String.IsNullOrEmpty(Model.Post.Title))
+        {
+            <h2>Add Post</h2>
+        }
+        else
+        {
+            <h2>Edit Post - @Model.Post.Title</h2>
+        }
         @await Html.PartialAsync("../Shared/_EditPost.cshtml", editPostViewModel);
     </div>
 </div>

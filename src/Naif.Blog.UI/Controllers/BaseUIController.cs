@@ -36,13 +36,33 @@ namespace Naif.Blog.UI.Controllers
             {
                 postViewModel.ParentPostId = String.Empty;
             }
-            
-            Post match = BlogManager.GetPost(Blog.BlogId, p => p.PostId == postViewModel.PostId);
 
+            Post match;
+            
+            //Check if add mode
+            if (string.IsNullOrWhiteSpace(postViewModel.Slug))
+            {
+                match = new Post
+                {
+                    PostId = postViewModel.PostId,
+                    BlogId = Blog.BlogId
+                };
+            }
+            else
+            {
+                match = BlogManager.GetPost(Blog.BlogId, p => p.PostId == postViewModel.PostId);
+            }
+ 
             if (match != null)
             {
                 //Merge PostViewModel into matched Post
                 postViewModel.ToPost(match);
+                
+                //Create Slug if empty
+                if (!string.Equals(match.Slug, postViewModel.Slug, StringComparison.OrdinalIgnoreCase)  && !string.IsNullOrWhiteSpace(postViewModel.Slug))
+                {
+                    match.Slug = CreateSlug(postViewModel.Slug);
+                }
 
                 match.LastModified = DateTime.UtcNow;
 
