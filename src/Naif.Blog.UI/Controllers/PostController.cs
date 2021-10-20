@@ -168,6 +168,7 @@ namespace Naif.Blog.UI.Controllers
             ViewModel.Post = match;
             ViewModel.BaseUrl = "/post/list";
             ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Post saved successfully" } };
+            ViewModel.ReturnUrl = $"/post/list/{page}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("List", ViewModel);
