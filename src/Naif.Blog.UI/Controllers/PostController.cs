@@ -89,7 +89,7 @@ namespace Naif.Blog.UI.Controllers
         }
         
         [HttpGet]
-        [Route("list")]
+        [Route("list/{page?}")]
         public IActionResult List(int? page)
         {
             var index = page ?? 0;
