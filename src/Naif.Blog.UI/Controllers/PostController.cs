@@ -103,6 +103,19 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpGet]
+        [Route("list/{page}/add")]
+        public IActionResult Add(int page)
+        {
+            ViewModel.PageIndex = page;
+            ViewModel.Post = new Post();
+            ViewModel.BaseUrl = "/post/list";
+            ViewModel.ReturnUrl = $"/post/list/{page}";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+        
+        [HttpGet]
         [Route("edit/{postId}")]
         public IActionResult Edit(string postId, string returnUrl)
         {
