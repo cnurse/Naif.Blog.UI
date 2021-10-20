@@ -5,6 +5,7 @@
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 @{
+    var deleteUrl = "/post/delete";
     var editUrl = "/post/edit";
 }
 
@@ -13,8 +14,9 @@
 
     <component type="typeof(PostList)" 
                render-mode="ServerPrerendered"
+               param-DeleteUrl="@deleteUrl"
+               param-EditUrl="@editUrl"
                param-Posts="@Model.Posts"
-               param-EditUrl="editUrl"
                param-ReturnUrl="@Model.ReturnUrl">
     </component>
 </section>

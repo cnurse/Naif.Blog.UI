@@ -6,6 +6,7 @@
 
 @{
     var editUrl = $"/post/edit/{Model.Post.PostId}?returnUrl={Model.Post.Slug}";
+    var deleteUrl = $"/post/delete/{Model.Post.PostId}?returnUrl={Model.Post.Slug}";
     var categoryUrl = "/category";
     var tagUrl = "/Tag";
 }
@@ -13,9 +14,10 @@
 <section>
     <component type="typeof(PostView)" 
                render-mode="ServerPrerendered"
+               param-DeleteUrl="@deleteUrl"
+               param-EditUrl="@editUrl"
+               param-CategoryUrl="@categoryUrl"
                param-Post="@Model.Post"
-               param-EditUrl="editUrl"
-               param-CategoryUrl="categoryUrl"
-               param-TagUrl = "tagUrl">
+               param-TagUrl = "@tagUrl">
     </component>
 </section>
