@@ -11,7 +11,8 @@
         ActionUrl = $"/post/list/{Model.PageIndex}/save",
         Messages = Model.Messages,
         PageIndex = Model.PageIndex,
-        Post = Model.Post.ToPostViewModel()
+        Post = Model.Post.ToPostViewModel(),
+        ReturnUrl = Model.ReturnUrl
     };
 
     var addUrl = $"/post/list/{Model.PageIndex}/add";
