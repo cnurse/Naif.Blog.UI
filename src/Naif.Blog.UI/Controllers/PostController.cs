@@ -147,6 +147,17 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [HttpPost]
+        [Route("delete/{postId}")]
+        public IActionResult Delete(string postId, string returnUrl)
+        {
+            var post = BlogManager.GetPost(Blog.BlogId, p => p.PostId == postId);
+            
+            BlogManager.DeletePost(post);
+            
+            return Redirect(returnUrl);
+        }
+
+        [HttpPost]
         [Route("list/{page}/save")]
         public IActionResult Save(int page, PostViewModel post)
         {
@@ -170,5 +181,6 @@ namespace Naif.Blog.UI.Controllers
 
             return Redirect(returnUrl);
         }
+
     }
 }
