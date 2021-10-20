@@ -5,8 +5,8 @@
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
 @{
-    var editUrl = $"/post/edit/{Model.Post.PostId}?returnUrl={Model.Post.Slug}";
-    var deleteUrl = $"/post/delete/{Model.Post.PostId}?returnUrl={Model.Post.Slug}";
+    var editUrl = $"/post/edit/{Model.Post.PostId}?returnUrl=/post/{Model.Post.Slug}";
+    var deleteUrl = $"/post/delete/{Model.Post.PostId}?returnUrl=/post/{Model.Post.Slug}";
     var categoryUrl = "/category";
     var tagUrl = "/Tag";
 }
