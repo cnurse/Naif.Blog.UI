@@ -78,7 +78,7 @@
                        param-Posts="@recentPosts">
             </component>
             <hr/>
-            <component type="typeof(RecentPosts)"
+            <component type="typeof(CategoryList)"
                        render-mode="ServerPrerendered"
                        param-Categories="@Model.Blog.Categories"
                        param-CssClass="@("nav flex-column")"
@@ -91,8 +91,7 @@
 </div>
 <component type="typeof(PageFooter)"
            render-mode="ServerPrerendered"
-           param-Blog="@Model.Blog"
-           param-CssClass="@("nav flex-column")">
+           param-Blog="@Model.Blog">
 </component>
 </body>
 </html>
