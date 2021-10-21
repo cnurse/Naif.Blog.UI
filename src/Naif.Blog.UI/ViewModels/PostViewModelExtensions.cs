@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Naif.Blog.Models;
 using Naif.Blog.Models.Extensions;
 
@@ -64,10 +65,13 @@ namespace Naif.Blog.UI.ViewModels
             post.Categories = new List<Category>();
             foreach (var category in postViewModel.Categories.TrimStart('[').TrimEnd(']').Split(new[] { ',' }))
             {
-                post.Categories.Add(new Category()
+                if (!String.IsNullOrEmpty(category))
                 {
-                    Name = category
-                });
+                    post.Categories.Add(new Category()
+                    {
+                        Name = category
+                    });
+                }
             }
 
             post.Tags = new List<Tag>();
@@ -75,10 +79,13 @@ namespace Naif.Blog.UI.ViewModels
             {
                 foreach (var tag in postViewModel.Tags.Split(new[] { ',' }))
                 {
-                    post.Tags.Add(new Tag()
+                    if (!String.IsNullOrEmpty(tag))
                     {
-                        Name = tag
-                    });
+                        post.Tags.Add(new Tag()
+                        {
+                            Name = tag
+                        });
+                    }
                 }
             }
         }
