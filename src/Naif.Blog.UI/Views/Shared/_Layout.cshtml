@@ -1,13 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Hosting
 @using Microsoft.Extensions.Hosting
 @using Naif.Blog.Razor
+@using Naif.Blog.Razor.Framework
 @using Naif.Blog.Razor.Menus
 @using Naif.Blog.Services
 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @inject IWebHostEnvironment  env
-@inject IBlogManager _blogManager
+@inject IBlogManager blogManager
 
 @model Naif.Blog.UI.ViewModels.BlogViewModel
+
+@{
+    var pageState = new PageState { User = Model.User };
+    var recentPosts = blogManager.GetRecentPosts(Model.Blog.BlogId, 8).ToList();
+}
 
 <!DOCTYPE html>
 <html>
@@ -36,39 +44,55 @@
     <script type="text/javascript" src="~/lib/jqcloud/jqcloud.min.js"></script>
 </head>
 <body>
-@(await Html.RenderComponentAsync<NavBar>(RenderMode.ServerPrerendered, 
-    new { Blog = Model.Blog, 
-        Posts = Model.Pages.ToList(),
-        CssClass = "navbar fixed-top navbar-expand-lg navbar-dark bg-dark",
-        Depth = 4,
-        IncludeProfilePicture = true,
-        IncludeSignIn = env.IsDevelopment(),
-        IncludeSignUp = env.IsDevelopment(),
-        MenuCssClass = "navbar-nav",
-        SubMenuCssClass = "dropdown-menu dropdown-menu-dark"
-    }))
-    <div class="container body-content">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    @Model.Blog.Title<br/>
-                    <small>@Model.Blog.ByLine</small>
-                </h1>
-            </div>
-        </div>
-        <div class="row">
-            <div id="mainPane" class="col-md-8">
-                @RenderBody()
-            </div>
-            <div id="sidePane" class="col-md-4">
-                @(await Html.RenderComponentAsync<RecentPosts>(RenderMode.ServerPrerendered, new { Posts = _blogManager.GetRecentPosts(Model.Blog.BlogId, 8).ToList(), CssClass = "nav flex-column"}))
-                <hr/>
-                @(await Html.RenderComponentAsync<CategoryList>(RenderMode.ServerPrerendered, new { Categories = Model.Blog.Categories, CssClass = "nav flex-column"}))
-                <hr/>
-                @await Component.InvokeAsync("TagCloud", new { blog = Model.Blog, count = -1})
-            </div>
+    <component type="typeof(NavBar)"
+               render-mode="ServerPrerendered"
+               param-Blog="@Model.Blog"
+               param-Posts="@Model.Posts.ToList()"
+               param-CssClass="@("navbar fixed-top navbar-expand-lg navbar-dark bg-dark")"
+               param-Depth="4"
+               param-IncludeProfilePicture="true"
+               param-IncludeSignIn="@env.IsDevelopment()"
+               param-IncludeSignUp="@env.IsDevelopment()"
+               param-MenuCssClass="@("navbar-nav")"
+               param-PageState="@pageState"
+               param-SubMenuCssClass="@("dropdown-menu dropdown-menu-dark")">
+    </component>
+<div class="container body-content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                @Model.Blog.Title<br/>
+                <small>@Model.Blog.ByLine</small>
+            </h1>
         </div>
     </div>
-    @(await Html.RenderComponentAsync<PageFooter>(RenderMode.ServerPrerendered, new { Model.Blog}))
+    <div class="row">
+        <div id="mainPane" class="col-md-8">
+            @RenderBody()
+        </div>
+        <div id="sidePane" class="col-md-4">
+            <component type="typeof(RecentPosts)"
+                       render-mode="ServerPrerendered"
+                       param-CssClass="@("nav flex-column")"
+                       param-PageState="@pageState"
+                       param-Posts="@recentPosts">
+            </component>
+            <hr/>
+            <component type="typeof(RecentPosts)"
+                       render-mode="ServerPrerendered"
+                       param-Categories="@Model.Blog.Categories"
+                       param-CssClass="@("nav flex-column")"
+                       param-PageState="@pageState">
+            </component>
+            <hr/>
+            @await Component.InvokeAsync("TagCloud", new { blog = Model.Blog, count = -1 })
+        </div>
+    </div>
+</div>
+<component type="typeof(PageFooter)"
+           render-mode="ServerPrerendered"
+           param-Blog="@Model.Blog"
+           param-CssClass="@("nav flex-column")">
+</component>
 </body>
 </html>

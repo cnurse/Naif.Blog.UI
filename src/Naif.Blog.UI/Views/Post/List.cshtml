@@ -1,6 +1,9 @@
 ﻿@using Naif.Blog.Razor
+@using Naif.Blog.Razor.Framework
 @using Naif.Blog.Razor.Lists
 @using Naif.Blog.UI.ViewModels
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @model Naif.Blog.UI.ViewModels.BlogViewModel
 
@@ -15,22 +18,23 @@
         ReturnUrl = Model.ReturnUrl
     };
 
+    var pageState = new PageState { User = Model.User };
     var addUrl = $"/post/list/{Model.PageIndex}/add";
 }
 
 <div class="row">
     <div class="col-lg-4">
         <h2>Manage Posts</h2>
-        @(await Html.RenderComponentAsync<PagedPostList>(RenderMode.ServerPrerendered, new
-        {
-            BaseUrl = Model.BaseUrl,
-            Filter = "", 
-            PageCount = 20, 
-            PageIndex = Model.PageIndex, 
-            Posts = Model.Posts,
-            Mode = ListMode.Table
-        }))
-        
+        <component type="typeof(PagedPostList)" 
+                   render-mode="ServerPrerendered"
+                   param-BaseUrl="@Model.BaseUrl"
+                   param-Filter="@String.Empty"
+                   param-Mode="@ListMode.Table"
+                   param-PageCount="20"
+                   param-PageIndex="@Model.PageIndex"
+                   param-PageState="@pageState"
+                   param-Posts="@Model.Posts">
+        </component>
     </div>
     <div class="col-lg-8">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
