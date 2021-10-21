@@ -59,9 +59,13 @@ namespace Naif.Blog.UI.Controllers
                 postViewModel.ToPost(match);
                 
                 //Create Slug if empty
-                if (!string.Equals(match.Slug, postViewModel.Slug, StringComparison.OrdinalIgnoreCase)  && !string.IsNullOrWhiteSpace(postViewModel.Slug))
+                if (!string.IsNullOrWhiteSpace(match.Slug))
                 {
-                    match.Slug = CreateSlug(postViewModel.Slug);
+                    match.Slug = CreateSlug(match.Slug);
+                }
+                else
+                {
+                    match.Slug = CreateSlug(match.Title);
                 }
 
                 match.LastModified = DateTime.UtcNow;
