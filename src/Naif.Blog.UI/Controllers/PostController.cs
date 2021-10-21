@@ -7,6 +7,8 @@ using Naif.Blog.Framework;
 using Naif.Blog.Models;
 using Naif.Blog.Services;
 using Naif.Blog.UI.ViewModels;
+using Naif.Core.Models;
+
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Naif.Blog.UI.Controllers

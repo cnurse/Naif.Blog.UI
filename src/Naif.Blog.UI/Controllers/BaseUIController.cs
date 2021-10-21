@@ -19,7 +19,8 @@ namespace Naif.Blog.UI.Controllers
                 Blog = Blog,
                 PageIndex = 0,
                 Pages = BlogManager.GetPosts(Blog.BlogId, p => p.PostType != PostType.Post),
-                Posts = BlogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p))
+                Posts = BlogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p)),
+                User = blogContext.User
             };
 
         }

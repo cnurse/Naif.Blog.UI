@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Naif.Blog.Models;
+using Naif.Core.Models;
 
 namespace Naif.Blog.UI.ViewModels
 {
