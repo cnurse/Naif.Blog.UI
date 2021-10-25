@@ -14,7 +14,15 @@
     {
         var returnUrl = WebUtility.UrlEncode(Model.ReturnUrl);
         _actionUrl += $"?returnUrl={returnUrl}";
-        _deleteUrl += $"?returnUrl={returnUrl}";
+        if(Model.Post.PostType == PostType.Post)
+        {
+            _deleteUrl += $"?returnUrl={returnUrl}";
+        }
+        else
+        {
+            _deleteUrl += $"?returnUrl=/home/index";
+        }
+        
     }
     
     var _deleteText = (Model.Post.PostType == PostType.Post) ? "Delete Post" : "Delete Page"; 
