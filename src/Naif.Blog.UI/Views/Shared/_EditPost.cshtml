@@ -16,6 +16,8 @@
         _actionUrl += $"?returnUrl={returnUrl}";
         _deleteUrl += $"?returnUrl={returnUrl}";
     }
+    
+    var _deleteText = (Model.Post.PostType == PostType.Post) ? "Delete Post" : "Delete Page"; 
 }
 
 <form class="g-3" action="@_actionUrl" method="post">
@@ -147,7 +149,7 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-secondary me-md-2 btn-lg" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">Delete Post</button>
+        <button type="button" class="btn btn-secondary me-md-2 btn-lg" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">@_deleteText</button>
         <button type="submit" class="btn btn-primary btn-lg">Save</button>
     </div>
 
@@ -158,11 +160,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmModalLabel">Delete Post</h5>
+                <h5 class="modal-title" id="deleteConfirmModalLabel">@_deleteText</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                This action is not reversible. Are you sure you want to delete this post?  
+                This action is not reversible. Are you sure you want to delete this @((Model.Post.PostType == PostType.Post) ? "post?" : "page?")  
             </div>
             <div class="modal-footer">
                 <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>

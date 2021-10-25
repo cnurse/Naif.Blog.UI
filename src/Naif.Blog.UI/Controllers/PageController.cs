@@ -130,7 +130,18 @@ namespace Naif.Blog.UI.Controllers
             // ReSharper disable once Mvc.ViewNotResolved
             return View("List", ViewModel);
         }
-        
+
+        [HttpGet]
+        [Route("add")]
+        public IActionResult Add()
+        {
+            ViewModel.Post = new Post {PostType = PostType.Page };
+            ViewModel.ReturnUrl = $"/page/list";
+
+            // ReSharper disable once Mvc.ViewNotResolved
+            return View("List", ViewModel);
+        }
+
         [HttpGet]
         [Route("edit/{postId}")]
         public IActionResult Edit(string postId)
