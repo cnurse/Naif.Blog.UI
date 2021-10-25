@@ -58,6 +58,8 @@ namespace Naif.Blog.UI.Controllers
         [Route("category/{category}/{page?}")]
         public IActionResult ViewCategory(string category, int? page)
         {
+            var index = page ?? 0;
+
             var post = BlogManager.GetPost(Blog.BlogId, p => p.PostTypeDetail == category && p.PostType == PostType.Category);
 
             if (post == null)
@@ -67,10 +69,11 @@ namespace Naif.Blog.UI.Controllers
 
             var posts = ViewModel.Posts.Where(p => p.Categories.Any(c => c.Name == category));
 
-            ViewModel.PageIndex = page ?? 0;
+            ViewModel.PageIndex = index;
             ViewModel.Post = post;
             ViewModel.Posts = posts;
             ViewModel.BaseUrl = $"/page/category/{category}";
+            ViewModel.ReturnUrl = $"/page/category/{category}/{index}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
@@ -80,6 +83,8 @@ namespace Naif.Blog.UI.Controllers
         [Route("tag/{tag}/{pageIndex?}")]
         public IActionResult ViewTag(string tag, int? page)
         {
+            var index = page ?? 0;
+
             var post = BlogManager.GetPost(Blog.BlogId, p => p.PostTypeDetail == tag && p.PostType == PostType.Tag);
 
             if (post == null)
@@ -89,10 +94,11 @@ namespace Naif.Blog.UI.Controllers
 
             var posts = ViewModel.Posts.Where(p => p.Tags.Any(c => c.Name == tag));
 
-            ViewModel.PageIndex = page ?? 0;
+            ViewModel.PageIndex = index;
             ViewModel.Post = post;
             ViewModel.Posts = posts;
             ViewModel.BaseUrl = $"/page/tag/{tag}";
+            ViewModel.ReturnUrl = $"/page/tag/{tag}/{index}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
@@ -157,8 +163,5 @@ namespace Naif.Blog.UI.Controllers
 
             return result;
         }
-
-
-
     }
 }
