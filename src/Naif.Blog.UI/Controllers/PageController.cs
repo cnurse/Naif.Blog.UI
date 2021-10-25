@@ -21,6 +21,8 @@ namespace Naif.Blog.UI.Controllers
         [Route("blog/{detail}/{page?}")]
         public IActionResult ViewBlog(string detail, int? page)
         {
+            var index = page ?? 0;
+
             var post = BlogManager.GetPost(Blog.BlogId, p => p.PostTypeDetail == detail && p.PostType == PostType.Blog);
 
             if (post == null)
@@ -28,13 +30,14 @@ namespace Naif.Blog.UI.Controllers
                 return new NotFoundResult();
             }
 
-            ViewModel.PageIndex = page ?? 0;
+            ViewModel.PageIndex = index;
+            ViewModel.Post = post;
             ViewModel.Post = post;
             ViewModel.BaseUrl = $"/page/blog/{detail}";
+            ViewModel.ReturnUrl = $"/page/blog/{detail}/{index}";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("ViewList", ViewModel);
-
         }
 
         [HttpGet]
