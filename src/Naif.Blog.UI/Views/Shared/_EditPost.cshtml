@@ -157,7 +157,11 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-secondary me-md-2 btn-lg" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">@_deleteText</button>
+        @if (!String.IsNullOrEmpty(Model.Post.Title))
+        {
+            <button type="button" class="btn btn-secondary me-md-2 btn-lg" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">@_deleteText</button>
+        }
+        
         <button type="submit" class="btn btn-primary btn-lg">Save</button>
     </div>
 
