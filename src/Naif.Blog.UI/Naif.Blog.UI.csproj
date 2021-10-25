@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <ProductVersion>2.3.1</ProductVersion>
-    <FileVersion>2.3.1.49</FileVersion>
+    <FileVersion>2.3.1.50</FileVersion>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
   </PropertyGroup>
 
