@@ -114,6 +114,7 @@ namespace Naif.Blog.UI.Controllers
 
             ViewModel.Post = post;
             ViewModel.BaseUrl = "/page/list";
+            ViewModel.ReturnUrl = $"/page/list";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("List", ViewModel);
@@ -126,6 +127,7 @@ namespace Naif.Blog.UI.Controllers
             var post = ViewModel.Pages.SingleOrDefault(p => p.PostId == postId);
             ViewModel.Post = post;
             ViewModel.BaseUrl = "/page/list";
+            ViewModel.ReturnUrl = $"/page/list";
 
             // ReSharper disable once Mvc.ViewNotResolved
             return View("List", ViewModel);
