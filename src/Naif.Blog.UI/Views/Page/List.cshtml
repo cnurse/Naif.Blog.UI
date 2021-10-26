@@ -14,15 +14,16 @@
     
     var pages = Model.Pages.Select(page => new SelectListItem { Value = page.PostId, Text = page.Title }).ToList();
     pages.Insert(0, new SelectListItem { Value="", Text="<-None Selected->"});
+    
+    var postViewModel = Model.Post?.ToPostViewModel();
     var editPostViewModel = new EditPostViewModel()
     {
         ActionUrl = "/page/save",
         Messages = Model.Messages,
         PageIndex = Model.PageIndex,
-        Post = Model.Post.ToPostViewModel(),
+        Post = postViewModel,
         Pages = pages,
         ReturnUrl = Model.ReturnUrl
-
     };
 }
 
@@ -46,15 +47,18 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a role="button" class="btn btn-primary me-md-2 btn-lg" href="@addUrl">Add Page</a>
             </div>
-            @if (String.IsNullOrEmpty(Model.Post.Title))
+            @if(postViewModel != null)
             {
-                <h2>Add Page</h2>
+                if (String.IsNullOrEmpty(Model.Post.Title))
+                {
+                    <h2>Add Page</h2>
+                }
+                else
+                {
+                    <h2>Edit Page - @Model.Post.Title</h2>
+                }
+                @await Html.PartialAsync("../Shared/_EditPost.cshtml", editPostViewModel);
             }
-            else
-            {
-                <h2>Edit Page - @Model.Post.Title</h2>
-            }
-        @await Html.PartialAsync("../Shared/_EditPost.cshtml", editPostViewModel);
     </div>
 </div>
 
