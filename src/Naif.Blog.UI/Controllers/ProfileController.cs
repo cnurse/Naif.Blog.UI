@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Framework;
 using Naif.Blog.Services;
-using Naif.Blog.UI.ViewModels;
 
 namespace Naif.Blog.UI.Controllers
 {
