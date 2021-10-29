@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
+using Naif.Blog.Security;
 using Naif.Blog.Services;
 using Naif.Blog.ViewModels;
+using Naif.Core.Constants;
 using Naif.Core.Models;
 
 namespace Naif.Blog.UI.Controllers
@@ -13,7 +16,7 @@ namespace Naif.Blog.UI.Controllers
     [Route("page")]
     public class PageController : BaseUIController
     {
-        public PageController(IBlogContext blogContext, IBlogManager blogManager) : base(blogContext, blogManager)
+        public PageController(IBlogContext blogContext, IBlogManager blogManager, IPostAuthorizationProcessor authorizationProcessor) : base(blogContext, blogManager, authorizationProcessor)
         {
         }
 
@@ -31,7 +34,6 @@ namespace Naif.Blog.UI.Controllers
             }
 
             ViewModel.PageIndex = index;
-            ViewModel.Post = post;
             ViewModel.Post = post;
             ViewModel.BaseUrl = $"/page/blog/{detail}";
             ViewModel.ReturnUrl = $"/page/blog/{detail}/{index}";
@@ -108,6 +110,7 @@ namespace Naif.Blog.UI.Controllers
         }
 
         [Route("list")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult List()
         {
             var post = ViewModel.Pages.Where(p => p.ParentPostId == "").OrderBy(p => p.PageOrder).FirstOrDefault();
@@ -122,6 +125,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("list/page/{postId}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult List(string postId)
         {
             var post = ViewModel.Pages.SingleOrDefault(p => p.PostId == postId);
@@ -135,6 +139,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("add")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Add()
         {
             ViewModel.Post = new Post {PostType = PostType.Page };
@@ -147,6 +152,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("edit/{postId}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Edit(string postId)
         {
             var post = ViewModel.Pages.SingleOrDefault(p => p.PostId == postId);
@@ -161,6 +167,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpPost]
         [Route("save")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Save(PostViewModel post, string returnUrl)
         {
             Post match = SavePost(post);

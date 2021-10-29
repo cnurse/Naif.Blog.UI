@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
+using Naif.Blog.Security;
 using Naif.Blog.Services;
 using Naif.Blog.ViewModels;
+using Naif.Core.Constants;
 using Naif.Core.Models;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -15,7 +18,7 @@ namespace Naif.Blog.UI.Controllers
 	[Route("post")]
     public class PostController : BaseUIController
     {
-        public PostController(IBlogContext blogContext, IBlogManager blogManager) : base(blogContext, blogManager)
+        public PostController(IBlogContext blogContext, IBlogManager blogManager, IPostAuthorizationProcessor authorizationProcessor) : base(blogContext, blogManager, authorizationProcessor)
         {
         }
 
@@ -91,10 +94,11 @@ namespace Naif.Blog.UI.Controllers
         
         [HttpGet]
         [Route("list/{page?}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult List(int? page)
         {
             var index = page ?? 0;
-            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
+            ViewModel.Posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
             ViewModel.PageIndex = index;
             ViewModel.Post = ViewModel.Posts.FirstOrDefault();
             ViewModel.BaseUrl = "/post/list";
@@ -106,9 +110,10 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("list/{page}/add")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Add(int page)
         {
-            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
+            ViewModel.Posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
             ViewModel.PageIndex = page;
             ViewModel.Post = new Post();
             ViewModel.BaseUrl = "/post/list";
@@ -120,6 +125,7 @@ namespace Naif.Blog.UI.Controllers
         
         [HttpGet]
         [Route("edit/{postId}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Edit(string postId, string returnUrl)
         {
             var post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
@@ -135,9 +141,10 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("list/{page}/edit/{postId}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Edit(int page, string postId)
         {
-            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
+            ViewModel.Posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
             ViewModel.PageIndex = page;
             ViewModel.Post = ViewModel.Posts.SingleOrDefault(p => p.PostId == postId);
             ViewModel.BaseUrl = "/post/list";
@@ -149,6 +156,7 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpGet]
         [Route("delete/{postId}")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Delete(string postId, string returnUrl)
         {
             var post = BlogManager.GetPost(Blog.BlogId, p => p.PostId == postId);
@@ -160,12 +168,13 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpPost]
         [Route("list/{page}/save")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Save(int page, PostViewModel post)
         {
             Post match = SavePost(post);
 
             ViewModel.PageIndex = page;
-            ViewModel.Posts = BlogManager.GetPosts(Blog.BlogId, p => p.PostType == PostType.Post);
+            ViewModel.Posts = ViewModel.Posts.Where(p => p.PostType == PostType.Post);
             ViewModel.Post = match;
             ViewModel.BaseUrl = "/post/list";
             ViewModel.Messages = new List<Message> { new() { Type = MessageType.Success, Text = "Post saved successfully" } };
@@ -177,12 +186,12 @@ namespace Naif.Blog.UI.Controllers
 
         [HttpPost]
         [Route("save")]
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Save(PostViewModel post, string returnUrl)
         {
             Post match = SavePost(post);
 
             return Redirect(returnUrl);
         }
-
     }
 }

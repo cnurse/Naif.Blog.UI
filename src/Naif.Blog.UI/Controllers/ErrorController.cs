@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Framework;
+using Naif.Blog.Security;
 using Naif.Blog.Services;
 
 namespace Naif.Blog.UI.Controllers
 {
     public class ErrorController : BaseUIController
     {
-        public ErrorController(IBlogContext blogContext, IBlogManager blogManager) : base(blogContext, blogManager)
+        public ErrorController(IBlogContext blogContext, IBlogManager blogManager, IPostAuthorizationProcessor authorizationProcessor) : base(blogContext, blogManager, authorizationProcessor)
         {
         }
 

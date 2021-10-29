@@ -3,6 +3,7 @@ using System.Linq;
 using Naif.Blog.Controllers;
 using Naif.Blog.Framework;
 using Naif.Blog.Models;
+using Naif.Blog.Security;
 using Naif.Blog.Services;
 using Naif.Blog.ViewModels;
 
@@ -10,17 +11,19 @@ namespace Naif.Blog.UI.Controllers
 {
     public abstract class BaseUIController : BaseController
     {
-        protected BaseUIController(IBlogContext blogContext, IBlogManager blogManager)
+        protected BaseUIController(IBlogContext blogContext, IBlogManager blogManager, IPostAuthorizationProcessor authorizationProcessor)
         {
+            var user = blogContext.User;
+            
             Blog = blogContext.Blog;
             BlogManager = blogManager;
             ViewModel = new BlogViewModel()
             {
                 Blog = Blog,
                 PageIndex = 0,
-                Pages = BlogManager.GetPosts(Blog.BlogId, p => p.PostType != PostType.Post),
-                Posts = BlogManager.GetPosts(Blog.BlogId, p => Post.SearchPredicate(p)),
-                User = blogContext.User
+                Pages = BlogManager.GetPosts(Blog.BlogId, p => p.PostType != PostType.Post && authorizationProcessor.CanViewPost(p, user)),
+                Posts = BlogManager.GetPosts(Blog.BlogId, p => (p.PostType == PostType.Post || p.PostType == PostType.Page) && authorizationProcessor.CanViewPost(p, user)),
+                User = user
             };
 
         }

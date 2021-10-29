@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naif.Blog.Framework;
+using Naif.Blog.Security;
 using Naif.Blog.Services;
 
 namespace Naif.Blog.UI.Controllers
@@ -9,7 +10,7 @@ namespace Naif.Blog.UI.Controllers
     [Route("Profile")]
     public class ProfileController : BaseUIController
     {
-        public ProfileController(IBlogContext blogContext, IBlogManager blogManager) : base(blogContext, blogManager)
+        public ProfileController(IBlogContext blogContext, IBlogManager blogManager, IPostAuthorizationProcessor authorizationProcessor) : base(blogContext, blogManager, authorizationProcessor)
         {
         }
 
