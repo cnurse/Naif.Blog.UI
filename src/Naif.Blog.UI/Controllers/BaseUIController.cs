@@ -21,8 +21,11 @@ namespace Naif.Blog.UI.Controllers
             {
                 Blog = Blog,
                 PageIndex = 0,
-                Pages = BlogManager.GetPosts(Blog.BlogId, p => p.PostType != PostType.Post && authorizationProcessor.CanViewPost(p, user)),
-                Posts = BlogManager.GetPosts(Blog.BlogId, p => (p.PostType == PostType.Post || p.PostType == PostType.Page) && authorizationProcessor.CanViewPost(p, user)),
+                Pages = BlogManager.GetPosts(Blog.BlogId, p => p.PostType != PostType.Post 
+                                                               && authorizationProcessor.CanViewPost(p, user)),
+                Posts = BlogManager.GetPosts(Blog.BlogId, p => (p.PostType == PostType.Post || p.PostType == PostType.Page) 
+                                                               && p.IncludeInLists 
+                                                               && authorizationProcessor.CanViewPost(p, user)),
                 User = user
             };
 

@@ -14,7 +14,7 @@ namespace Naif.Blog.UI.Security
             bool canView = true;
             if (!user.IsAuthenticated || !user.IsInRole(RoleNames.Admin))
             {
-                canView = post.IncludeInLists && post.IsPublished && post.PubDate <= DateTime.UtcNow;
+                canView = post.IsPublished && post.PubDate <= DateTime.UtcNow;
             }
 
             return canView;
