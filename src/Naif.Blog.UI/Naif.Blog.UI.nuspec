@@ -23,8 +23,6 @@
     </metadata>
     <files>
         <file src="bin\Release\net6.0\Naif.Blog.UI.dll" target="lib\net6.0" />
-        <file src="bin\Release\net6.0\Naif.Blog.UI.Views.dll" target="lib\net6.0" />
         <file src="bin\Release\net6.0\Naif.Blog.UI.pdb" target="lib\net6.0" />
-        <file src="bin\Release\net6.0\Naif.Blog.UI.Views.pdb" target="lib\net6.0" />
     </files>
 </package>
