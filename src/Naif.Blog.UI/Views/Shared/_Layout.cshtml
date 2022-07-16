@@ -14,7 +14,7 @@
 
 @{
     var pageState = new PageState { User = Model.User };
-    var recentPosts = blogManager.GetRecentPosts(Model.Blog.BlogId, 8).ToList();
+    var recentPosts = blogManager.GetRecentPosts(Model.Blog.BlogId, 5).ToList();
 }
 
 <!DOCTYPE html>
@@ -71,9 +71,14 @@
             @RenderBody()
         </div>
         <div id="sidePane" class="col-md-4">
-            <component type="typeof(RecentPosts)"
+            <component type="typeof(ArticleList)"
                        render-mode="ServerPrerendered"
                        param-CssClass="@("nav flex-column")"
+                       param-IncludeLastUpdated="@true"
+                       param-HeadingText="Recent Articles"
+                       param-newText = "<small><em> - updated</em></small>"
+                       param-LastUpdatedTeXt = "<small><em> - updated</em></small>"
+                       param-NewText = "<small><em> - new</em></small>"
                        param-PageState="@pageState"
                        param-Posts="@recentPosts">
             </component>
