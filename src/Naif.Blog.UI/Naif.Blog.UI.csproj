@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <ProductVersion>2.3.3</ProductVersion>
-    <FileVersion>2.3.3.3</FileVersion>
+    <ProductVersion>2.3.4</ProductVersion>
+    <FileVersion>2.3.4.0</FileVersion>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
     <LangVersion>latestmajor</LangVersion>
     <RepositoryUrl>https://github.com/cnurse/Naif.Blog.UI</RepositoryUrl>

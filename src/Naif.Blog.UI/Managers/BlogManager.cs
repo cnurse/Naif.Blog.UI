@@ -46,9 +46,10 @@ namespace Naif.Blog.UI.Managers
 
         public IEnumerable<Post> GetRecentPosts(string blogId, int count)
         {
+            var posts = GetPosts(blogId, p => p.PostType != PostType.Spacer).OrderByDescending(p => p.LastModified);
             return (count < 0) 
-                ? _postRepository.GetAllPosts(blogId).OrderByDescending(p => p.LastModified) 
-                : _postRepository.GetAllPosts(blogId).OrderByDescending(p => p.LastModified).Take(count);
+                ? posts 
+                : posts.Take(count);
         }
 
         public IEnumerable<Post> GetPosts(string blogId, Func<Post, bool> predicate)
