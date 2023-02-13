@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <ProductVersion>2.3.4</ProductVersion>
     <FileVersion>2.3.4.0</FileVersion>
@@ -16,9 +16,9 @@
 
   <ItemGroup>
     <PackageReference Include="Naif.Auth0" Version="2.1.1" />
-    <PackageReference Include="Naif.Blog.Core" Version="3.2.0" />
-    <PackageReference Include="Naif.Blog.Razor" Version="2.0.2" />
-    <PackageReference Include="Naif.Core" Version="3.3.2" />
+    <PackageReference Include="Naif.Blog.Core" Version="3.2.1-alpha-03" />
+    <PackageReference Include="Naif.Blog.Razor" Version="2.1.0-alpha-11" />
+    <PackageReference Include="Naif.Core" Version="3.3.3-alpha-04" />
   </ItemGroup>
 
 </Project>
