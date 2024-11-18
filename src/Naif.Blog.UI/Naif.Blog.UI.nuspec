@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Naif.Blog.UI</id>
-        <version>2.3.4-alpha-02</version>
+        <version>2.4.0-alpha-01</version>
         <authors>Charles Nurse</authors>
         <title>Naif.Blog.UI</title>
         <description>This package contains UI components for use in the Naif.Blog family of projects</description>
@@ -13,16 +13,16 @@
         <repository type="git" url="https://github.com/cnurse/Naif.Blog.UI" branch="main" />
         <summary>This package contains UI components for use in the Naif.Blog family of projects</summary>
         <dependencies>
-            <group targetFramework="net7.0">
-                <dependency id="Naif.Auth0" version="2.1.1" exclude="Build,Analyzers" />
-                <dependency id="Naif.Blog.Core" version="3.2.1-alpha-03" exclude="Build,Analyzers" />
-                <dependency id="Naif.Blog.Razor" version="2.1.0-alpha-11" exclude="Build,Analyzers" />
-                <dependency id="Naif.Core" version="3.3.3-alpha-04" exclude="Build,Analyzers" />
+            <group targetFramework="net9.0">
+                <dependency id="Naif.Auth0" version="2.2.0-alpha-01" exclude="Build,Analyzers" />
+                <dependency id="Naif.Blog.Core" version="3.3.0-alpha-01" exclude="Build,Analyzers" />
+                <dependency id="Naif.Blog.Razor" version="2.2.0-alpha-01" exclude="Build,Analyzers" />
+                <dependency id="Naif.Core" version="3.4.0-alpha-01" exclude="Build,Analyzers" />
             </group>
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\net7.0\Naif.Blog.UI.dll" target="lib\net7.0" />
-        <file src="bin\Release\net7.0\Naif.Blog.UI.pdb" target="lib\net7.0" />
+        <file src="bin\Release\net9.0\Naif.Blog.UI.dll" target="lib\net9.0" />
+        <file src="bin\Release\net9.0\Naif.Blog.UI.pdb" target="lib\net9.0" />
     </files>
 </package>
