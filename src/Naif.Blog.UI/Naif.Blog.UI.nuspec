@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Naif.Blog.UI</id>
-        <version>2.4.0-alpha-02</version>
+        <version>2.4.0</version>
         <authors>Charles Nurse</authors>
         <title>Naif.Blog.UI</title>
         <description>This package contains UI components for use in the Naif.Blog family of projects</description>
@@ -14,15 +14,17 @@
         <summary>This package contains UI components for use in the Naif.Blog family of projects</summary>
         <dependencies>
             <group targetFramework="net10.0">
-                <dependency id="Naif.Auth0" version="2.2.0-alpha-02" exclude="Build,Analyzers" />
-                <dependency id="Naif.Blog.Core" version="3.3.0-alpha-02" exclude="Build,Analyzers" />
-                <dependency id="Naif.Blog.Razor" version="2.2.0-alpha-02" exclude="Build,Analyzers" />
-                <dependency id="Naif.Core" version="3.4.0-alpha-02" exclude="Build,Analyzers" />
+                <dependency id="Naif.Auth0" version="2.2.0" exclude="Build,Analyzers" />
+                <dependency id="Naif.Blog.Core" version="3.3.0" exclude="Build,Analyzers" />
+                <dependency id="Naif.Blog.Razor" version="2.2.0" exclude="Build,Analyzers" />
+                <dependency id="Naif.Core" version="3.4.0" exclude="Build,Analyzers" />
             </group>
         </dependencies>
+        <readme>docs\README.md</readme>
     </metadata>
     <files>
         <file src="bin\Release\net10.0\Naif.Blog.UI.dll" target="lib\net10.0" />
         <file src="bin\Release\net10.0\Naif.Blog.UI.pdb" target="lib\net10.0" />
+        <file src="..\..\README.md" target="docs\" />
     </files>
 </package>
